@@ -3,8 +3,8 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 // #include <iostream>
 
-#include "finalValueAfterOperations.h"
-#include "src/2_twoSum.h"
+// #include "finalValueAfterOperations.h"
+#include "2_twoSum.h"
 // #include "src/2_twoSum.h"
 
 // #include "solution.h"

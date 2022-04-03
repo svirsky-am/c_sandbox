@@ -1,1 +1,0 @@
-/usr/bin/gcc -g  -rdynamic CMakeFiles/hello_headers.dir/src/finalValueAfterOperations.o CMakeFiles/hello_headers.dir/src/main.o  -o hello_headers 

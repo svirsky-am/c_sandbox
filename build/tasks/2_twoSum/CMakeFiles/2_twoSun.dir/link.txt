@@ -1,1 +1,0 @@
-/usr/bin/gcc -g   CMakeFiles/2_twoSun.dir/src/solution.c.o  -o 2_twoSun 
