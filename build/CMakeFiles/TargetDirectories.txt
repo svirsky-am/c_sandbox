@@ -1,0 +1,6 @@
+/media/svirsky/Data/projects/cmakeEdu/build/CMakeFiles/rebuild_cache.dir
+/media/svirsky/Data/projects/cmakeEdu/build/CMakeFiles/edit_cache.dir
+/media/svirsky/Data/projects/cmakeEdu/build/CMakeFiles/hello_headers.dir
+/media/svirsky/Data/projects/cmakeEdu/build/tasks/2_twoSum/CMakeFiles/edit_cache.dir
+/media/svirsky/Data/projects/cmakeEdu/build/tasks/2_twoSum/CMakeFiles/rebuild_cache.dir
+/media/svirsky/Data/projects/cmakeEdu/build/tasks/2_twoSum/CMakeFiles/2_twoSun.dir
