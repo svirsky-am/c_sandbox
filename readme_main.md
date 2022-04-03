@@ -62,8 +62,9 @@ whereis gcc
 
 plog-converter -a GA:1,2 -t tasklist -o report.tasks ./testRep.txt 
 
-
+```shell
 pvs-studio-analyzer analyze -l /path/to/PVS-Studio.lic \
                             -o /path/to/PVS-Studio.log \
                             -e /path/to/exclude-path \
                             -j<N>
+```
