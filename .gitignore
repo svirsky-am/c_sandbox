@@ -1,1 +1,36 @@
 .build/*
+**/**/*.tar.xz
+dpdk/dpdk-*/*
+
+
+
+dpdk/postinstall.log
+# unix_c/*/*
+# unix_c/*/*/*
+unix_c/*/*/*/*
+unix_c/*/*/*/*/*
+unix_c/**/*.odp
+unix_c/**/*.exe
+unix_c/**/*.pdf
+unix_c/**/*~
+# unix_c/*
+# !unix_c/**/
+# unix_c/**/*
+!unix_c/**/.c
+!unix_c/**/*.h
+# !unix_c/**/*.pdf
+!unix_c/**/Makefile
+# !unix_c/**/**/*
+
+# unix_c/**/**/*
+# !unix_c/**/**/*.*
+# !unix_c/**/**/**/*
+
+# unix_c/**/**/**/*
+# !unix_c/**/**/**/*.*
+# !unix_c/**/**/**/**/*
+# !unix_c/**/
+
+# !unix_c/*.*
+# !unix_c/*/*.*
+ !.gitignore
