@@ -13,7 +13,8 @@ int main (int argc, char ** argv) {
     printf("Использование: %s <директория>\n", argv[0]);
     return 0;
   }
-  n = scandir(argv[1], &entry, sel, alphasort);
+  // n = scandir(argv[1], &entry, sel, alphasort);
+  n = scandir(argv[1], &entry, 1, alphasort);
   if (n < 0) 
   {
      printf("Ошибка чтения каталога\n");
