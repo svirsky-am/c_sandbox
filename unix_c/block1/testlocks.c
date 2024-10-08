@@ -10,17 +10,18 @@ int main(int argc, char * argv[])
   memset(str, 32, 64);
   struct flock fi;
   int off;
+  mode_t mode = S_IRUSR | S_IWUSR;
   sprintf(str, "Запись сделана процессом %i", getpid());
-  fd = open("testlocks.txt", O_RDWR|O_CREAT);
+  fd = open("testlocks.txt", O_RDWR|O_CREAT, mode);
   fi.l_type = F_WRLCK;
   fi.l_whence = SEEK_SET;
   fi.l_start = 0;
   fi.l_len = 64;
   	off = 0;
   while (fcntl(fd, F_SETLK, &fi) == -1)
-  {
-     fcntl(fd, F_GETLK, &fi);
-     printf("байты %i - %i заблокированы процессом %i\n", off, off+64, fi.l_pid);
+  { 
+    fcntl(fd, F_GETLK, &fi);
+    printf("байты %i - %i заблокированы процессом %i\n", off, off+64, fi.l_pid);
      off += 64;
      fi.l_start = off;
   }
@@ -29,6 +30,8 @@ int main(int argc, char * argv[])
   getchar();
   fi.l_type = F_UNLCK;
   if (fcntl(fd, F_SETLK, &fi) == -1)
-    printf("Ошибка разблокирования\n");
+    printf("Ошибка разблокирования\n");  
+
   close(fd);
+
 } 

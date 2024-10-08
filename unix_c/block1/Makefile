@@ -8,7 +8,7 @@ printdir2:
 printenv:
 	gcc printenv.c -o printenv
 testlocks:
-	gcc testlocks.c -o testlocks
+	gcc testlocks.c -g -o testlocks
 install:
 	cp makehole ~/bin
 	cp printdir1 ~/bin
