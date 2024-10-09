@@ -101,7 +101,13 @@ telnet localhost 30333
     SIGUSR1
     SIGUSR2
 - процесс init позволяет удочеить зомби- проссы и собрать с них сигналы 
+- fork присваивает дочернему процессу pid=0
 
+- 
+```sh
+block6_zobie_control/run block6_zobie_control/run ../block5_signals/siglog # kill -9 12973
+block6_zobie_control/run block2_pipes/makelog ../block5_signals/siglog
+```
 
 
 ```sh

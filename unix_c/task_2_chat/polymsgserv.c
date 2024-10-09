@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
 
     if (message1.client_wait_req==1)
     {
-        printf("Please enter respone for client....");
+        printf("Please enter respone for client....\n");
         while ( (i < (MAXLEN - 1)) && ((message2.body[i++] = getchar()) !=  '\n') );
         strcpy(message2.body, response);
         msgsnd(msgid, &message2, MSG_2_SIZE, 0); // посылаем ответ
