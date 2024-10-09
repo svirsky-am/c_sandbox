@@ -3,44 +3,11 @@
 #include <errno.h>
 #include <pthread.h>
 
-// void inline swap(int *i, int *j)
-void swap(int *i, int *j)
-{
-    int t;
-    t = *i;
-    *i = *j;
-    *j = t;
-}
 
-void reverse(int * v, int n)
-{
-   int i;
-   for (i = 0; i < (n/2); i++)
-     swap(&v[i], &v[n-1-i]);
-}
 
-int next_permutation(int * v, int n)
-{
-   int i, j;
-   i = n - 1;
-   while ((i > 1) && (v[i] < v[i-1])) i--;
-   if (v[i] > v[i-1]) {
-     j = n - 1;
-     while (v[j] < v[i-1]) j--;
-     swap(&v[j], &v[i-1]);
-     reverse(&v[i], n-i);
-     return 1;
-   }
-   return 0;
-}
 
-void print_vect(int * v, int n)
-{
-   int i;
-   for (i = 0; i < n - 1; i++)
-     printf("%i ", v[i]);
-   printf("%i\n", v[n-1]);
-}
+
+
 
 int numberCount(FILE* input) {
   fseek(input, 0, SEEK_SET);
@@ -70,6 +37,7 @@ void print_array(int* numbers, int size) {
 }
 
 struct meta_of_array{
+  // https://metanit.com/c/tutorial/6.3.php
     int size;
     int worker_count;
     int* numbers;
@@ -78,28 +46,20 @@ struct meta_of_array{
 
 void * thread_func(void *arg)
 {
-  int size = * (int *) arg;
-  printf("Size %d\n", size);
+  struct meta_of_array * p_meta_of_array =arg;
+
+  int size = (*p_meta_of_array).size;
   int i;
-  int worker_id = * ((int * ) arg + 1);
-  // worker_id ++;
-  
-   
-  // //  Приведение типа (умножение указателя на int)
-  //  int size = * (int *) arg; 
-  //     v = malloc(sizeof(int)*size);
-  //  for(i = 0; i < size; i++) v[i] = i+1;
-   printf("Size %d, worker_id %d\n", size, worker_id);
-  //  print_vect(v, size);
+  printf("Size %d\n", size);
+  int worker_id =(*p_meta_of_array).worker_count;
+  p_meta_of_array->worker_count += 1;
+   printf("worker_id %d, size %d, \n", worker_id,  size);
+   for(i = worker_id; i < size; i+=2) 
+   {
+    printf(" %d - ", p_meta_of_array->numbers[i]);
+    p_meta_of_array->acc_sum += p_meta_of_array->numbers[i];
+   };
 
-  // //  print_array(arg, size);
-
-  //  printf("Size %d\n", size);
-  // //  while(next_permutation(v, size)) {
-  // //    print_vect(v, size);
-  // //    sync();
-  // //  }
-  //  free(v);
 }
 
 
@@ -129,17 +89,14 @@ int main(int argc, char * argv[])
 
 
 
-  //  size = 4;
+  // Run first worker
    result = pthread_create(&thread1, NULL, thread_func,  &meta_arr);
    if (result != 0) {
      perror("Creating the first thread");
      return EXIT_FAILURE;
    }
-  //  size2 = 5;
-
-
-
-   
+  // Run second worker
+  
    result = pthread_create(&thread2, NULL, thread_func, &meta_arr );
    if (result != 0) {
      perror("Creating the second thread");
@@ -155,6 +112,9 @@ int main(int argc, char * argv[])
      perror("Joining the second thread");
      return EXIT_FAILURE;
    }
+  
+   printf("\n\nResult: %d\n", meta_arr.acc_sum);
    printf("Done\n");
+
    return EXIT_SUCCESS;
 }
