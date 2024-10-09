@@ -100,6 +100,19 @@ telnet localhost 30333
 
     SIGUSR1
     SIGUSR2
+- процесс init позволяет удочеить зомби- проссы и собрать с них сигналы 
+
+
+
+```sh
+unix_c/block5_signals/sigdemo
+# cltl+c
+# cltl+z
+
+# in pther terminal 
+kill -15 8375
+kill -1 8375
+```
 
 
 ### day4
