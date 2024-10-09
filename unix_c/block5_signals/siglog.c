@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <string.h>
 
 void term_handler(int sig) {
-  printf("Signal %i - %s\n", sig, sys_siglist[sig]);
+  // printf("Signal handler - %d\n", strsignal(sig));
+  printf("Signal handler - %s\n", strsignal(sig));
   exit(EXIT_SUCCESS);
 }
 
@@ -18,7 +20,7 @@ int main(int argc, char ** argv) {
   sigprocmask(SIG_SETMASK, &sset, 0);
   printf("My pid is %i\n", getpid());
   while(!sigwait(&sset, &sig))
-    printf("Signal %i - %s\n", sig, sys_siglist[sig]);
-    //printf("%s\n", strsignal(sig));
+    // printf("Signal %i - %s\n", sig, sys_siglist[sig]);
+  printf("%s\n", strsignal(sig));
   return EXIT_SUCCESS;
 }

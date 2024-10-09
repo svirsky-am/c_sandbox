@@ -13,7 +13,7 @@ isedykh@specialist.ru
 
 -  Daniel P. Bovet, Marco Cesati "Understanding the Linux Kernel, Third Edition" November 2005 ISBN 10: 0-596-00565-2
 - https://man7.org/
-
+- кирилл богачев (основы параллельных вычислений)
 
 ## envirement
 - build-essential
@@ -82,8 +82,60 @@ isedykh@specialist.ru
 
 - shared memory (shmem) выделяется с помощью shmget
 - spin locks
+### day3
+- AF_UNIX- файловый сокет
+- пасивные и активные сокеты (liasten - переводит сокет в режим активного ожижания)
+```sh
+edu_c/unix_c/block4_sockets/netserver 30333
+telnet localhost 30333
+```
+порт освобождается через некоторые время
+
+- sugnals
+    1 SIGHUP 
+    2 SIGINT interapt ctrl+c
+    9 SIGKILL       kill -9 -1 
+    15 SIGTERM      kill -15 1234
+    19 SIGSTOP 
+
+    SIGUSR1
+    SIGUSR2
+- процесс init позволяет удочеить зомби- проссы и собрать с них сигналы 
+- fork присваивает дочернему процессу pid=0
+
+- D_REENTERANT - сказать компилятор использовать реинтерабельные функции (т.е. которые не изменяют состоянии)
+
+- к многопоточной программе можно смело применять strip, т.к. нет возможности поставить точки останова
+- олаживать многопоточную прогрмамму лучше всего  с O0 + valgrind позволяет отчлеживать утечки (-O2 меняет логику прогриммы )
+
+- volatile отключает оптимизации для этих переменных
+- inline - функция , которая будет вставлена туда, где она будет вызвана 
+- join -паттерн многопоточного программирования 
+
+```sh
+block6_zobie_control/run block6_zobie_control/run ../block5_signals/siglog # kill -9 12973
+block6_zobie_control/run block2_pipes/makelog ../block5_signals/siglog
+```
+
+- thread != stream (see lightweight process) - делят с другим потоками переменные, дескрипторы и адресное пространство 
+
+- posix  вклчет в себя pthreads
+- openMPI
 
 
+
+```sh
+unix_c/block5_signals/sigdemo
+# cltl+c
+# cltl+z
+
+# in pther terminal 
+kill -15 8375
+kill -1 8375
+```
+
+
+### day4
 
 ## utils
 
@@ -113,3 +165,6 @@ http://numa.math.msu.su/data/materials/Valedinsky_Kornev_MProgC_Release_V2.
 
 
 4) Написать брокер ips-сообщений (как вариант с форком)
+
+#### hometask 3
+Расспарраллелить вычисление суммы элементов массивов (предпочтительно по четными и нечетным чистал)

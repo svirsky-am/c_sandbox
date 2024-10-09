@@ -3,7 +3,8 @@
 #include <errno.h>
 #include <pthread.h>
 
-void inline swap(int *i, int *j)
+// void inline swap(int *i, int *j)
+void swap(int *i, int *j)
 {
     int t;
     t = *i;
@@ -45,8 +46,10 @@ void * thread_func(void *arg)
 {
    int i;
    int * v;
-   int size = * (int *) arg;
-   v = malloc(sizeof(int)*size);
+   
+  //  Приведение типа (умножение указателя на int)
+   int size = * (int *) arg; 
+      v = malloc(sizeof(int)*size);
    for(i = 0; i < size; i++) v[i] = i+1;
    print_vect(v, size);
    while(next_permutation(v, size)) {
@@ -66,7 +69,7 @@ int main(int argc, char * argv[])
      perror("Creating the first thread");
      return EXIT_FAILURE;
    }
-   size2 = 3;
+   size2 = 5;
    result = pthread_create(&thread2, NULL, thread_func, &size2);
    if (result != 0) {
      perror("Creating the second thread");
