@@ -23,6 +23,13 @@ int main(int argc, char * argv[])
   while (1==1)
   {
       while ( (i < (MAXLEN - 1)) && ((message1.body[i++] = getchar()) !=  '\n') );
+      if (message1.body == 'give_requset'){
+        message1.client_wait_req = 1; 
+      }
+      else {
+        message1.client_wait_req = 1;
+      }
+
       message1.body[i] = '\0';
       message1.mtype = 1;
       message1.snd_pid = getpid ();

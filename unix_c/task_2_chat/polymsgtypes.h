@@ -9,6 +9,7 @@ struct msg_1_t
    long mtype;
    int snd_pid;
    char body[MAXLEN];
+   int client_wait_req;
 };
 
 struct msg_2_t
@@ -17,6 +18,7 @@ struct msg_2_t
    int snd_pid;
    int rcv_pid;
    char body[MAXLEN];
+   int client_wait_req;
 };
 
 #define MSG_1_SIZE sizeof(struct msg_1_t) - sizeof(long)

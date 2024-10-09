@@ -21,13 +21,18 @@ int main(int argc, char * argv[])
     message2.mtype = 2;
     message2.snd_pid = getpid();
     message2.rcv_pid = message1.snd_pid;
-    if (message1.body == "wait")
+    // if (message1.body == "wait")
+    // if (message1.client_wait_req == "1")
+    if (1==1)
+    
     {
       wait_mode = 1;
       strcpy(message2.body, response);
       msgsnd(msgid, &message2, MSG_2_SIZE, 0); // посылаем ответ
       msgrcv(msgid, &message1, MSG_1_SIZE, 1, 0);  // ждем подтверждения
-    } else if (message1.body == "give response"){
+
+      printf ("'%i' not found\n", message1.client_wait_req);
+    } else {
       wait_mode = 0;
       strcpy(message2.body, response);
       msgsnd(msgid, &message2, MSG_2_SIZE, 0); // посылаем ответ
