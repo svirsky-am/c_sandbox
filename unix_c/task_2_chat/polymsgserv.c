@@ -12,33 +12,47 @@ int main(int argc, char * argv[])
   struct msg_2_t message2;
   int msgid;
   int wait_mode=1;
+  int i;
   char * response = "Ok!";
   msgid = msgget(KEY, 0777 | IPC_CREAT);  // создаем очередь сообщений
-  while (1==1)
+  
+  
+  int flag_req_end_session=0;
+
+
+  while (flag_req_end_session!=1)
   {
     msgrcv(msgid, &message1, MSG_1_SIZE, 1, 0);  // ждем сообщение
     printf("Client (pid = %i) sent: %s", message1.snd_pid, message1.body);
     message2.mtype = 2;
     message2.snd_pid = getpid();
     message2.rcv_pid = message1.snd_pid;
-    // if (message1.body == "wait")
-    // if (message1.client_wait_req == "1")
-    if (1==1)
-    
+    if (message1.client_req_end_session==1)  
     {
-      wait_mode = 1;
-      strcpy(message2.body, response);
-      msgsnd(msgid, &message2, MSG_2_SIZE, 0); // посылаем ответ
-      msgrcv(msgid, &message1, MSG_1_SIZE, 1, 0);  // ждем подтверждения
-
-      printf ("'%i' not found\n", message1.client_wait_req);
-    } else {
-      wait_mode = 0;
-      strcpy(message2.body, response);
-      msgsnd(msgid, &message2, MSG_2_SIZE, 0); // посылаем ответ
-      msgrcv(msgid, &message1, MSG_1_SIZE, 1, 0);  // ждем подтверждения
+      flag_req_end_session = 1;
+      printf ("Setup flag_req_end_session to '%i'\n", message1.client_wait_req);    
     }
-    
+
+
+    if (message1.client_wait_req==1)
+    {
+        printf("Please enter respone for client....");
+        while ( (i < (MAXLEN - 1)) && ((message2.body[i++] = getchar()) !=  '\n') );
+        strcpy(message2.body, response);
+        msgsnd(msgid, &message2, MSG_2_SIZE, 0); // посылаем ответ
+        msgrcv(msgid, &message1, MSG_1_SIZE, 1, 0);  // ждем подтверждения
+    } else
+    {    
+        strcpy(message2.body, response);
+        msgsnd(msgid, &message2, MSG_2_SIZE, 0); // посылаем ответ
+        msgrcv(msgid, &message1, MSG_1_SIZE, 1, 0);  // ждем подтверждения
+
+    }
+
+
+    // wait_mode = 1;
+
+    // printf ("Setup wait mod to '%i'\n", message1.client_wait_req);    
 
   }
   msgctl(msgid, IPC_RMID, 0);  // удаляем очередь

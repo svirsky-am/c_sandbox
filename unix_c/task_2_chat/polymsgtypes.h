@@ -10,6 +10,7 @@ struct msg_1_t
    int snd_pid;
    char body[MAXLEN];
    int client_wait_req;
+   int client_req_end_session;
 };
 
 struct msg_2_t
@@ -19,6 +20,7 @@ struct msg_2_t
    int rcv_pid;
    char body[MAXLEN];
    int client_wait_req;
+   int client_req_end_session;
 };
 
 #define MSG_1_SIZE sizeof(struct msg_1_t) - sizeof(long)
