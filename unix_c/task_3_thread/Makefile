@@ -1,13 +1,14 @@
-all:  threads
+all:  sum_nums_via_threads
 
-rebuild: clean threads
+rebuild_and_run: clean sum_nums_via_threads
+	./sum_nums_via_threads
 
-threads:
-	gcc threads.c -D_REENTERANT -o threads  -lpthread -O0
-	strip threads
+sum_nums_via_threads:
+	gcc sum_nums_via_threads.c -D_REENTERANT -o sum_nums_via_threads  -lpthread -O0
+	strip sum_nums_via_threads
 install:
-	cp threads ~/bin
+	cp sum_nums_via_threads ~/bin
 clean:
 	 rm -f *.o   
-	 rm -f threads
+	 rm -f sum_nums_via_threads
 	 rm -f *~
