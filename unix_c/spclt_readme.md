@@ -82,8 +82,27 @@ isedykh@specialist.ru
 
 - shared memory (shmem) выделяется с помощью shmget
 - spin locks
+### day3
+- AF_UNIX- файловый сокет
+- пасивные и активные сокеты (liasten - переводит сокет в режим активного ожижания)
+```sh
+edu_c/unix_c/block4_sockets/netserver 30333
+telnet localhost 30333
+```
+порт освобождается через некоторые время
+
+- sugnals
+    1 SIGHUP 
+    2 SIGINT interapt ctrl+c
+    9 SIGKILL       kill -9 -1 
+    15 SIGTERM      kill -15 1234
+    19 SIGSTOP 
+
+    SIGUSR1
+    SIGUSR2
 
 
+### day4
 
 ## utils
 
