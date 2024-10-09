@@ -1,4 +1,7 @@
-all:  threads 
+all:  threads
+
+rebuild: clean threads
+
 threads:
 	gcc threads.c -D_REENTERANT -o threads  -lpthread -O0
 	strip threads
