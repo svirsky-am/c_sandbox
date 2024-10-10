@@ -3,14 +3,10 @@
 #include <errno.h>
 #include <pthread.h>
 
-#define NTHREADS 2
-
-//todo : sem_wait(&sem); 2) thread pool,
-// pthread_mutex_t mutex1.  example: unix_c/block8_mutex/mutex1.c
+pthread_mutex_t condition_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 
-
-
+#define NTHREADS 8
 
 
 int numberCount(FILE* input) {
@@ -48,6 +44,7 @@ struct meta_of_array{
     int worker_count;
     int* numbers;
     int acc_sum;
+    int pool_of_workers;
 };
 
 void * thread_func(void *arg)
@@ -56,16 +53,18 @@ void * thread_func(void *arg)
 
   int size = (*p_meta_of_array).size;
   int i;
+  int inc_for_loop = (*p_meta_of_array).pool_of_workers;
+
   printf("Size %d\n", size);
   int worker_id =(*p_meta_of_array).worker_count;
   p_meta_of_array->worker_count += 1;
    printf("worker_id %d, size %d, \n", worker_id,  size);
-   for(i = worker_id; i < size; i+=2) 
+   for(i = worker_id; i < size; i+=inc_for_loop) 
    {
     printf(" %d - ", p_meta_of_array->numbers[i]);
-    // pthread_mutex_lock( &condition_mutex );
+    pthread_mutex_lock( &condition_mutex );
     p_meta_of_array->acc_sum += p_meta_of_array->numbers[i];
-    // thread_mutex_unlock( &condition_mutex );
+    pthread_mutex_unlock( &condition_mutex );
    };
 
 }
@@ -85,45 +84,32 @@ int main(int argc, char * argv[])
   print_array(numbers, size);
 
 
-  // pthread_t thread_id[NTHREADS];
+  int  result;
+
+  pthread_t thread_id[NTHREADS];
+
+  struct meta_of_array meta_arr;
+  meta_arr.acc_sum = 0;
+  meta_arr.numbers = numbers;
+  meta_arr.size = size;
+  meta_arr.worker_count = 0;
+  meta_arr.pool_of_workers = NTHREADS;
+
+  int i, j;
 
 
-   int  result;
-   // pthread_t thread1, thread2;
+  for(i=0; i < NTHREADS; i++)
+  {
+    pthread_create( &thread_id[i], NULL, thread_func, &meta_arr );
+    printf("Creating the thread number %d...\n", i);
+  }
 
-   pthread_t thread_id[NTHREADS];
+  for(j=0; j < NTHREADS; j++)
+  {
+    pthread_join( thread_id[j], NULL);
+    printf("Joining the thread number %d...\n", j);
+  }
 
-   struct meta_of_array meta_arr;
-   meta_arr.acc_sum = 0;
-   meta_arr.numbers = numbers;
-   meta_arr.size = size;
-   meta_arr.worker_count = 0;
-
-
-
-  // Run first worker
-   result = pthread_create(&thread_id[0], NULL, thread_func,  &meta_arr);
-   if (result != 0) {
-     perror("Creating the first thread");
-     return EXIT_FAILURE;
-   }
-  // Run second worker
-  
-   result = pthread_create(&thread_id[1], NULL, thread_func, &meta_arr );
-   if (result != 0) {
-     perror("Creating the second thread");
-     return EXIT_FAILURE;
-   }
-   result = pthread_join(thread_id[0], NULL);
-   if (result != 0) {
-     perror("Joining the first thread");
-     return EXIT_FAILURE;
-   }
-   result = pthread_join(thread_id[1], NULL);
-   if (result != 0) {
-     perror("Joining the second thread");
-     return EXIT_FAILURE;
-   }
   
    printf("\n\nResult: %d\n", meta_arr.acc_sum);
    printf("Done\n");
