@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
      perror("Creating the first thread");
      return EXIT_FAILURE;
    }
-   sem_wait(&sem);
+   sem_wait(&sem); // till sem !=0
    id = 2;
    result = pthread_create(&thread2, NULL, thread_func, &id);
    if (result != 0) {

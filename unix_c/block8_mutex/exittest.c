@@ -1,3 +1,8 @@
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+// unix_c/block8_mutex/exittest2.c, чтобы избежать double free
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
