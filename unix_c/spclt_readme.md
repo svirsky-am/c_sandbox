@@ -153,6 +153,26 @@ kill -1 8375
 
 
 
+#### daemon
+- после двух fork() родительским процессом становится init()
+```sh 
+cd ./edu_c/unix_c/block9_daemon
+make
+sudo ./aahzd
+telnet localhost 30333
+
+cat /var/run/aahzd.pid
+
+#stop 
+sudo ./aahzd stop 
+kill -9 $(cat /var/run/aahzd.pid) # badly stop 
+
+
+```
+
+#### IO
+- cat /dev/tty
+
 ## utils
 
 ### nm
@@ -193,8 +213,11 @@ http://numa.math.msu.su/data/materials/Valedinsky_Kornev_MProgC_Release_V2.
 с 3 по 4 - второй 
 с 6 по 10 - первый 
 
-
 2) сделать задачи 1 и 2 на потоках 
 3) три потока для unix_c/block8_mutex/mutex3.c
 
-hackerank- задачи на потоки
+ hackerank- задачи на потоки
+
+4) - запрограммировать терминальную игру unix_c/block10/psswdmode.c 
+
+5) запрограммировать  игру на сокетах
