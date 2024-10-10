@@ -3,6 +3,8 @@
 #include <errno.h>
 #include <pthread.h>
 
+#define NTHREADS 2
+
 //todo : sem_wait(&sem); 2) thread pool,
 // pthread_mutex_t mutex1.  example: unix_c/block8_mutex/mutex1.c
 
@@ -83,9 +85,13 @@ int main(int argc, char * argv[])
   print_array(numbers, size);
 
 
-  
+  // pthread_t thread_id[NTHREADS];
+
+
    int  result;
-   pthread_t thread1, thread2;
+   // pthread_t thread1, thread2;
+
+   pthread_t thread_id[NTHREADS];
 
    struct meta_of_array meta_arr;
    meta_arr.acc_sum = 0;
@@ -96,24 +102,24 @@ int main(int argc, char * argv[])
 
 
   // Run first worker
-   result = pthread_create(&thread1, NULL, thread_func,  &meta_arr);
+   result = pthread_create(&thread_id[0], NULL, thread_func,  &meta_arr);
    if (result != 0) {
      perror("Creating the first thread");
      return EXIT_FAILURE;
    }
   // Run second worker
   
-   result = pthread_create(&thread2, NULL, thread_func, &meta_arr );
+   result = pthread_create(&thread_id[1], NULL, thread_func, &meta_arr );
    if (result != 0) {
      perror("Creating the second thread");
      return EXIT_FAILURE;
    }
-   result = pthread_join(thread1, NULL);
+   result = pthread_join(thread_id[0], NULL);
    if (result != 0) {
      perror("Joining the first thread");
      return EXIT_FAILURE;
    }
-   result = pthread_join(thread2, NULL);
+   result = pthread_join(thread_id[1], NULL);
    if (result != 0) {
      perror("Joining the second thread");
      return EXIT_FAILURE;
