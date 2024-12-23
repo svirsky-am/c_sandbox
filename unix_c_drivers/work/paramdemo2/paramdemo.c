@@ -38,10 +38,10 @@ static const struct kernel_param_ops kpops = {
 /* two macroses  module_param() and MODULE_PARM_DESC() */
 
 module_param(value1, int, 0664);
-MODULE_PARM_DESC(value1, "module counter");
+MODULE_PARM_DESC(value1, "module counter value1");
 
 module_param_cb(value2, &kpops, &value2, 0664);
-MODULE_PARM_DESC(value2, "module string");
+MODULE_PARM_DESC(value2, "module counter value2");
 
 int init_module()
 {

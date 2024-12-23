@@ -21,3 +21,9 @@ default: $(BUILD_DIR_MAKEFILE)
 clean: $(BUILD_DIR_MAKEFILE)
 	$(MAKE) -C $(KERNEL_DIR) M=$(BUILD_DIR) src=$(PWD) clean
 
+
+.PHONY: build_and_load_mod
+build_and_load_mod: default
+	modinfo $(BUILD_DIR)/paramdemo.ko
+
+

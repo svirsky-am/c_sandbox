@@ -43,6 +43,8 @@ sudo rmmod ./hello.ko
 modinfo ./paramdemo.ko
 ```sh
 sudo insmod paramdemo.ko m_cout=20 m_char='"test1 test2"'
+ sudo insmod .build/paramdemo.ko m_cout=20 m_char='"test1 test2"'
+
 modinfo ./paramdemo.ko
 ```
 
@@ -55,7 +57,13 @@ cat /sys/module/paramdemo/parameters/*
 ```
 ## paramdemo2
 ```sh
+modinfo .build/paramdemo.ko
+sudo insmod .build/paramdemo.ko value1=31 value2=32
 
- sudo insmod .build/paramdemo.ko m_cout=20 m_char='"test1 test2"'
+```
 
+```sh
+sudo /sys/module/paramdemo/parameters/value2
+sudo su
+echo 33 >  /sys/module/paramdemo/parameters/value2 
 ```
