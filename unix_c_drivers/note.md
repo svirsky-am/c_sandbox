@@ -67,3 +67,7 @@ sudo /sys/module/paramdemo/parameters/value2
 sudo su
 echo 33 >  /sys/module/paramdemo/parameters/value2 
 ```
+## task_1_random_generator
+```
+sudo insmod .build/paramdemo.ko min_of_range=31 max_of_range=32
+```
