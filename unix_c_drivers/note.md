@@ -38,3 +38,24 @@ sudo insmod ./hello.ko
 ```
 sudo rmmod ./hello.ko
 ```
+
+## paramdemo 
+modinfo ./paramdemo.ko
+```sh
+sudo insmod paramdemo.ko m_cout=20 m_char='"test1 test2"'
+modinfo ./paramdemo.ko
+```
+
+```sh
+ls /sys/module/ | grep paramdemo
+```
+show params
+```sh
+cat /sys/module/paramdemo/parameters/*
+```
+## paramdemo2
+```sh
+
+ sudo insmod .build/paramdemo.ko m_cout=20 m_char='"test1 test2"'
+
+```
