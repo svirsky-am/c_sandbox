@@ -6,7 +6,7 @@ BUILD_DIR = $(shell pwd)/.build
 BUILD_DIR_MAKEFILE := $(BUILD_DIR)/Makefile
 
 
-obj-m := paramdemo.o
+obj-m := mod_sum_of_array.o
 
 $(BUILD_DIR):
 	mkdir -p "$@"
@@ -24,9 +24,9 @@ clean: $(BUILD_DIR_MAKEFILE)
 
 .PHONY: build_and_load_mod
 build_and_load_mod: default
-	modinfo $(BUILD_DIR)/paramdemo.ko
-	rmmod paramdemo.ko | true
-	insmod $(BUILD_DIR)/paramdemo.ko min_of_range=31 max_of_range=39
+	modinfo $(BUILD_DIR)/mod_sum_of_array.ko
+	rmmod mod_sum_of_array.ko | true
+	insmod $(BUILD_DIR)/mod_sum_of_array.ko in_array_len=3 nums_array='"57 63 75"'
 	tail /var/log/kern.log
 
 

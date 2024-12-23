@@ -6,6 +6,20 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("svirsky");
 
+/*-----------------------lib func----------------*/
+
+int generate_simple_random(int *lower, int *upper)
+{
+    unsigned int some_random_i;
+    get_random_bytes(&some_random_i, sizeof(some_random_i)-1);  
+    int mod_lower = some_random_i % *lower;
+    int num = (some_random_i % (*upper - *lower + 1)) + *lower;
+    printk(KERN_ALERT MOD_NAME "\tmod_lower = %d, random number = %d \tresult = %d", mod_lower, some_random_i, num);
+    
+
+    return num;
+}
+
 /*------------------ global variables start----------------*/
 
 static int min_of_range = 1;
@@ -23,6 +37,8 @@ static int value_set(const char *val, const struct kernel_param *kp )
     param_set_int(val, kp);
 
     printk(KERN_ALERT MOD_NAME " old value = %d, new value = %d\n", old, max_of_range);
+    int mun = generate_simple_random(&min_of_range, &max_of_range);
+    printk(KERN_ALERT MOD_NAME "reseted random number = %d ", mun);
     return 0;
 };
 
@@ -40,24 +56,15 @@ static const struct kernel_param_ops kpops = {
 
 
 
-module_param(min_of_range, int, 0664);
+// module_param(min_of_range, int, 0664);
+module_param_cb(min_of_range, &kpops, &min_of_range, 0664);
 MODULE_PARM_DESC(min_of_range, "module counter min_of_range");
 
 module_param_cb(max_of_range, &kpops, &max_of_range, 0664);
 MODULE_PARM_DESC(max_of_range, "module counter max_of_range");
 
 
-int generate_simple_random(int *lower, int *upper)
-{
-    unsigned int some_random_i;
-    get_random_bytes(&some_random_i, sizeof(some_random_i)-1);  
-    int mod_lower = some_random_i % *lower;
-    int num = (some_random_i % (*upper - *lower + 1)) + *lower;
-    printk(KERN_ALERT MOD_NAME "\tmod_lower = %d, random number = %d \tresult = %d", mod_lower, some_random_i, num);
-    
 
-    return num;
-}
 
 
 

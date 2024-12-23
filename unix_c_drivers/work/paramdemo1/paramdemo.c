@@ -14,10 +14,10 @@ static char *m_char = "empty";
 /* two macroses  module_param() and MODULE_PARM_DESC() */
 
 module_param(m_count, int, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
-MODULE_PARM_DESC(m_coubt, "module counter");
+MODULE_PARM_DESC(m_count, "module counter");
 
 module_param(m_char, charp, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
-MODULE_PARM_DESC(m_coubt, "module string");
+MODULE_PARM_DESC(m_char, "module string");
 
 int init_module()
 {

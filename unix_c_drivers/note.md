@@ -68,6 +68,13 @@ sudo su
 echo 33 >  /sys/module/paramdemo/parameters/value2 
 ```
 ## task_1_random_generator
-```
+```sh
 sudo insmod .build/paramdemo.ko min_of_range=31 max_of_range=32
+
+sudo su
+echo 90> /sys/module/mod_random_generator/parameters/min_of_range
+echo 95 > /sys/module/mod_random_generator/parameters/min_of_range
+
+echo 100 > /sys/module/mod_random_generator/parameters/max_of_range
+
 ```
