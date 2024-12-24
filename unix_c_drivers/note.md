@@ -126,9 +126,19 @@ cat .build/Module.symvers
 создание нового узла файловой системы
 ```sh
 mknod /dev/radio c 240 0
+# remove mode
+rm -rf /dev/radio 
 ```
 Попытка прочитать устройство ничем не закончится 
 ```sh 
 cat /dev/radio
+
+```
+
+## task 2.1
+```
+ mknod /dev/gen_random_dev_demo c 239 0
+ cat /dev/gen_random_dev_demo
+tail /var/log/kern.log
 
 ```
