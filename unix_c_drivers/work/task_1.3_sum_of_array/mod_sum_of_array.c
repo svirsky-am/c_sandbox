@@ -8,6 +8,15 @@ MODULE_AUTHOR("svirsky");
 
 /*-----------------------lib func----------------*/
 
+void clear_acc(char *str)
+{
+    int s;
+    // for (s= str; *s; ++s){
+    //     &str[s] = 0;
+    // };
+    // return (s);
+}
+
 int calculate_len(char *str)
 {
     const char *s;
@@ -21,8 +30,14 @@ int calculate_sun_of_array(int *len_of_array, char *nums_array)
     int size_of_nums_array = calculate_len(nums_array);
     // int size_of_nums_array = (*nums_array).size;
     int acc_sum = 0;
+
     printk(KERN_ALERT MOD_NAME "\t*len_of_array = %d array: %s size_of_nums_array: %d", *len_of_array, nums_array, size_of_nums_array);
-    char *acc_substr_num[32];
+    char acc_substr_num[32];
+
+    // printk(KERN_ALERT MOD_NAME "\t*acc_substr_num before clean: %s", *acc_substr_num);
+    // clear_acc(acc_substr_num);
+    // printk(KERN_ALERT MOD_NAME "\t*acc_substr_num after clean: %s", *acc_substr_num);
+
     for (int i = 0; i < size_of_nums_array; ++i) {
         printk(" \tnum %d: %s", i, &nums_array[i]);
     }

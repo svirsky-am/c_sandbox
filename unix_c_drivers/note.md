@@ -81,37 +81,42 @@ echo 100 > /sys/module/mod_random_generator/parameters/max_of_range
 
 
 # day2 
-
+```sh
 insmod ./.build/myalert.ko
 cat /proc/kallsyms | grep myalert
-
-
 insmod ./.build/hello.ko
-### try to rm  myalert
+```
+Try to rm  myalert
+```sh
 rmmod myalert.ko # not work becase it use by hello
-### firstly rm hello
+```
+Firstly rm hello
+```sh
 rmmod hello.ko
 rmmod myalert.ko
 insmod ./.build/hello.ko
-
-
-### creta package
+```
+## Creta package
+1. Insert *.ko to `misc` 
+```sh
 copy sources myalert.ko hello.ko to misc
 cp unix_c_drivers/work/hello2.2_myalert/.build/*.ko /usr/lib/modules/6.8.0-38-generic/misc
-
-### build dependencies 
+```
+2. Build dependencies 
+```sh
 sudo depmod
-
 ### load module from misc dir 
 sudo modprobe hello
-
-### check miss deps
+```
+3. Check miss deps
+```sh
 sudo depmod -v | grep hello
-
-### remove deps
+```
+4. remove deps
+```sh
 sudo modprobe -rf hello
 sudo modprobe -rf myalert
-
+```
 
 ## Hello 2.3
 
