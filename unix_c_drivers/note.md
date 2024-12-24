@@ -87,27 +87,32 @@ cat /proc/kallsyms | grep myalert
 
 
 insmod ./.build/hello.ko
-# try to rm  myalert
+### try to rm  myalert
 rmmod myalert.ko # not work becase it use by hello
-# firstly rm hello
+### firstly rm hello
 rmmod hello.ko
 rmmod myalert.ko
 insmod ./.build/hello.ko
 
 
-## creta package
+### creta package
 copy sources myalert.ko hello.ko to misc
 cp unix_c_drivers/work/hello2.2_myalert/.build/*.ko /usr/lib/modules/6.8.0-38-generic/misc
 
-## build dependencies 
+### build dependencies 
 sudo depmod
 
-## load module from misc dir 
+### load module from misc dir 
 sudo modprobe hello
 
-## check miss deps
+### check miss deps
 sudo depmod -v | grep hello
 
-## remove deps
+### remove deps
 sudo modprobe -rf hello
 sudo modprobe -rf myalert
+
+
+## Hello 2.3
+
+cat .build/Module.symvers
