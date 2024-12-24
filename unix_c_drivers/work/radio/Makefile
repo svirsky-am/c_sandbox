@@ -9,7 +9,7 @@ BUILD_DIR_MAKEFILE := $(BUILD_DIR)/Makefile
 
 obj-m := radio.o
 
-radio-objs := radio_main.o
+radio-objs := radio_main.o radio_or.o
 
 
 $(BUILD_DIR):

@@ -83,14 +83,10 @@ static const struct kernel_param_ops kpops = {
 /*----------------- declare module patams ------------------- */
 /* two macroses  module_param() and MODULE_PARM_DESC() */
 
-
-
-// module_param(in_array_len, int, 0664);
 module_param(in_array_len, int, 0664);
 MODULE_PARM_DESC(in_array_len, "Len of input array: in_array_len");
 
-// module_param(nums_array, &kpops, &nums_array, 0664);
-module_param(nums_array, charp, 0664);
+module_param_array(nums_array, int, N 0664);
 MODULE_PARM_DESC(nums_array, "Array of numbers: nums_array");
 
 

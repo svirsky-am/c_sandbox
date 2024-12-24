@@ -121,3 +121,14 @@ sudo modprobe -rf myalert
 ## Hello 2.3
 
 cat .build/Module.symvers
+
+## Radio (тестовое блочное устройство)
+создание нового узла файловой системы
+```sh
+mknod /dev/radio c 240 0
+```
+Попытка прочитать устройство ничем не закончится 
+```sh 
+cat /dev/radio
+
+```

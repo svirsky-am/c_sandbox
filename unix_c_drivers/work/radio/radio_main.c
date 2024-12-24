@@ -9,6 +9,10 @@ static int radio_major;
 int init_module(void)
 {
     memset(&fops, 0, sizeof(fops));
+    fops.owner = THIS_MODULE;
+    fops.open = radio_open;
+    fops.release = radio_release;
+    
 
     radio_major = register_chrdev(0, DEV_NAME, &fops);
     if(radio_major < 0)
@@ -17,7 +21,7 @@ int init_module(void)
         return radio_major;
     }
 
-    printk(KERN_ALERT DEV_NAME " registered , najor number = %d\n", radio_major);
+    printk(KERN_ALERT DEV_NAME " registered , major number = %d\n", radio_major);
 
     return 0;
 }
