@@ -26,7 +26,7 @@ clean: $(BUILD_DIR_MAKEFILE)
 build_and_load_mod: default
 	modinfo $(BUILD_DIR)/mod_sum_of_array.ko
 	rmmod mod_sum_of_array.ko | true
-	insmod $(BUILD_DIR)/mod_sum_of_array.ko in_array_len=3 nums_array='"57 63 75"'
+	insmod $(BUILD_DIR)/mod_sum_of_array.ko in_array_len=3
 	tail /var/log/kern.log
-
+# insmod $(BUILD_DIR)/mod_sum_of_array.ko in_array_len=3 nums_array='"57 63 75"'
 

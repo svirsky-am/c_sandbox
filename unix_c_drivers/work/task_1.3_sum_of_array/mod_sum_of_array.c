@@ -24,11 +24,11 @@ int calculate_len(char *str)
     return (s- str);
 }
 
-int calculate_sun_of_array(int *len_of_array, char *nums_array)
+int calculate_sun_of_array(int *len_of_array, int *nums_array)
 {
     int count_of_sum_in_stack = *len_of_array;
-    int size_of_nums_array = calculate_len(nums_array);
-    // int size_of_nums_array = (*nums_array).size;
+    // int size_of_nums_array = calculate_len(nums_array);
+    int size_of_nums_array = *len_of_array;
     int acc_sum = 0;
 
     printk(KERN_ALERT MOD_NAME "\t*len_of_array = %d array: %s size_of_nums_array: %d", *len_of_array, nums_array, size_of_nums_array);
@@ -39,7 +39,7 @@ int calculate_sun_of_array(int *len_of_array, char *nums_array)
     // printk(KERN_ALERT MOD_NAME "\t*acc_substr_num after clean: %s", *acc_substr_num);
 
     for (int i = 0; i < size_of_nums_array; ++i) {
-        printk(" \tnum %d: %s", i, &nums_array[i]);
+        printk(" \tnum %d: %d", i, &nums_array[i]);
     }
     // print(while count_of_sum_in_stack != 0 )
     
@@ -51,8 +51,8 @@ int calculate_sun_of_array(int *len_of_array, char *nums_array)
 
 /*------------------ global variables start----------------*/
 
-static int in_array_len = 1;
-static char  *nums_array = "2 3 6";
+static int in_array_len = 3;
+static int nums_array[] = { 3, 4, 5 };
 /*---------------------- value set func--------------------------------*/
 
 static int value_set(const char *val, const struct kernel_param *kp )
@@ -86,7 +86,7 @@ static const struct kernel_param_ops kpops = {
 module_param(in_array_len, int, 0664);
 MODULE_PARM_DESC(in_array_len, "Len of input array: in_array_len");
 
-module_param_array(nums_array, int, N 0664);
+module_param_array(nums_array, int, NULL, 0664);
 MODULE_PARM_DESC(nums_array, "Array of numbers: nums_array");
 
 
@@ -96,7 +96,7 @@ MODULE_PARM_DESC(nums_array, "Array of numbers: nums_array");
 
 int init_module()
 {
-    printk(KERN_ALERT MOD_NAME "in_array_len  = %d nums_array = %s\n", in_array_len, nums_array);
+    printk(KERN_ALERT MOD_NAME "in_array_len  = %d nums_array = \n", in_array_len );
     int sum_of_arr = calculate_sun_of_array(&in_array_len, nums_array);
     printk(KERN_ALERT MOD_NAME "random number = %d ", sum_of_arr);
     return 0;
