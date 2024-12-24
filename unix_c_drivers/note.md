@@ -78,3 +78,36 @@ echo 95 > /sys/module/mod_random_generator/parameters/min_of_range
 echo 100 > /sys/module/mod_random_generator/parameters/max_of_range
 
 ```
+
+
+# day2 
+
+insmod ./.build/myalert.ko
+cat /proc/kallsyms | grep myalert
+
+
+insmod ./.build/hello.ko
+# try to rm  myalert
+rmmod myalert.ko # not work becase it use by hello
+# firstly rm hello
+rmmod hello.ko
+rmmod myalert.ko
+insmod ./.build/hello.ko
+
+
+## creta package
+copy sources myalert.ko hello.ko to misc
+cp unix_c_drivers/work/hello2.2_myalert/.build/*.ko /usr/lib/modules/6.8.0-38-generic/misc
+
+## build dependencies 
+sudo depmod
+
+## load module from misc dir 
+sudo modprobe hello
+
+## check miss deps
+sudo depmod -v | grep hello
+
+## remove deps
+sudo modprobe -rf hello
+sudo modprobe -rf myalert
