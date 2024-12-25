@@ -165,11 +165,19 @@ mknod /dev/radio2 c 240 2
 ```sh
 sudo chmod 666 /dev/radio*
 sudo chmod 666 /dev/radio2
-echo hello > /dev/radio2
+
+echo test  > /dev/radio2
+
+echo test hello sdgfseg wsts gs test hello sdgfseg wsts gstest hello sdgfseg wsts gstest hello sdgfseg wsts gstest hello sdgfseg wsts gstest hello sdgfseg wsts gstest hello sdgfseg wsts gs > /dev/radio2
 
 
 cat /dev/radio0
 cat /dev/radio1
+```
+
+## radio v5 (task 3.2)
+
+```sh
 ```
 
 ## procdemo (multythrade)
