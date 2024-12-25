@@ -154,3 +154,20 @@ cat /dev/radio0 # This is radio speaking!
 rmmod radio
 cat /dev/radio0 # cat: /dev/radio0: Нет такого устройства или адреса
 ```
+
+## radio v4
+```sh
+sudo rm -rf  /dev/radio*
+mknod /dev/radio0 c 240 0
+mknod /dev/radio1 c 240 1
+mknod /dev/radio2 c 240 2
+```
+```sh
+sudo chmod 666 /dev/radio*
+sudo chmod 666 /dev/radio2
+echo hello > /dev/radio2
+
+
+cat /dev/radio0
+cat /dev/radio1
+```
