@@ -142,3 +142,6 @@ cat /dev/radio
 tail /var/log/kern.log
 
 ```
+
+# day 3
+Radio v2
