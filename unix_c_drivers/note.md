@@ -171,3 +171,19 @@ echo hello > /dev/radio2
 cat /dev/radio0
 cat /dev/radio1
 ```
+
+## procdemo (multythrade)
+
+```sh
+sudo insmod ./.build/procdemo.ko 
+```
+
+```sh
+ls /proc/ | grep demo
+```
+
+cleanup
+```sh
+rmmod procdemo
+
+```
