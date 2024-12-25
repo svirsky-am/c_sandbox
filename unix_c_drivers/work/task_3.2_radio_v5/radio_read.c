@@ -2,7 +2,7 @@
 
 static char *msg_array[] =
 {
-    "This is radio-0 speaking!",
+    "This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!This is radio-0 speaking!",
     "This is radio-1 speaking!"
 };
 

@@ -1,4 +1,8 @@
-/* myread1.c */
+/* myread1.c 
+See example here
+// https://www.opennet.ru/docs/RUS/zlp/005.html
+
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>

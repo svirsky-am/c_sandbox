@@ -25,6 +25,13 @@ all: default typeclient
 
 typeclient:
 	gcc typeclient.c -o typeclient
+
+.PHINY: typeclient_rebuild
+typeclient_rebuild:
+	rm -f ./typeclient
+	gcc typeclient.c -o typeclient
+	chmod +x typeclient
+	./typeclient
  
 
 default: $(BUILD_DIR_MAKEFILE)
@@ -38,6 +45,7 @@ clean: $(BUILD_DIR_MAKEFILE)
 .PHONY: build_and_load_mod
 build_and_load_mod: default
 	modinfo $(BUILD_DIR)/myalert.ko
+	rmmod mod_sum_of_array.ko | true
 # rmmod mod_sum_of_array.ko | true
 # insmod $(BUILD_DIR)/mod_sum_of_array.ko in_array_len=3 nums_array='"57 63 75"'
 # tail /var/log/kern.log

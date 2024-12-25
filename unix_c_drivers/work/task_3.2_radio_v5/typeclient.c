@@ -1,29 +1,40 @@
+// https://www.opennet.ru/docs/RUS/zlp/005.html
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
+
 
 #define FIFO_NAME "/dev/radio0"
 
-int main ()
+#define BUFFER_SIZE	64
+
+int main (int argc, char ** argv)
 {
+	int fd;
+	ssize_t read_bytes;
+	char buffer[BUFFER_SIZE+1];
+  fd = open (FIFO_NAME, O_RDONLY);
+	if (fd < 0)
+	{
+		fprintf (stderr, "Cannot open file\n");
+		exit (1);
+	}	
+	
+	while ((read_bytes = read (fd, buffer, BUFFER_SIZE)) > 0)
+	{
 
+    printf("\n-----Print part by dev------\n");
+		buffer[read_bytes] = 0; /* Null-terminator for C-string */
+		fputs (buffer, stdout);
+	}
 
-  int fd_in, fd_out;
-  // char * nr_message = "Enter your name, please\n";
-  char buf[64];
-  fd_in = open("/dev/tty", O_RDONLY);
-  // fd_out = open("/dev/tty", O_WRONLY);
-  // write(fd_out, nr_message, strlen(nr_message));
-  // while()
-  do
-  {
-    read(fd_in, buf, 64);
-    printf("Your name is %s\n", buf);
-    ch = fgetc(f);
-    putchar(ch);
-  } while (ch != 'q');
-
-
-  return EXIT_SUCCESS;
-
+	if (read_bytes < 0)
+	{
+		fprintf (stderr, "myread: Cannot read file\n");
+		exit (1);
+	}
+	close (fd);
+	exit (0);
 }
-
-
