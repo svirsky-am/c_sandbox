@@ -1,3 +1,5 @@
+
+
 #define kernel name
 CURRENT = $(shell uname -r)
 KERNEL_DIR = /lib/modules/$(CURRENT)/build
@@ -5,8 +7,10 @@ PWD = $(shell pwd)
 BUILD_DIR = $(shell pwd)/.build
 BUILD_DIR_MAKEFILE := $(BUILD_DIR)/Makefile
 
+obj-m := radio.o
 
-obj-m := mod_random_generator_dev.o
+radio-objs := radio_main.o radio_or.o radio_read.o
+
 
 $(BUILD_DIR):
 	mkdir -p "$@"
@@ -24,11 +28,9 @@ clean: $(BUILD_DIR_MAKEFILE)
 
 .PHONY: build_and_load_mod
 build_and_load_mod: default
-	modinfo $(BUILD_DIR)/mod_random_generator_dev.ko
-	rmmod mod_random_generator_dev.ko | true
-	insmod $(BUILD_DIR)/mod_random_generator_dev.ko min_of_range=31 max_of_range=39
-	tail /var/log/kern.log
-# rm -rf /dev/summator_dev_demo 
-# mknod /dev/summator_dev_demo c 239 0
-# cat /dev/summator_dev_demo
+	modinfo $(BUILD_DIR)/myalert.ko
+# rmmod mod_sum_of_array.ko | true
+# insmod $(BUILD_DIR)/mod_sum_of_array.ko in_array_len=3 nums_array='"57 63 75"'
+# tail /var/log/kern.log
+
 

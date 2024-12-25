@@ -145,3 +145,12 @@ tail /var/log/kern.log
 
 # day 3
 Radio v2
+
+## radio v3  (with read implimentation)
+```sh
+mknod /dev/radio0 c 240 0
+cat /dev/radio0 # This is radio speaking!
+
+rmmod radio
+cat /dev/radio0 # cat: /dev/radio0: Нет такого устройства или адреса
+```
