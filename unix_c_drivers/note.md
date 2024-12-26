@@ -199,3 +199,38 @@ rmmod procdemo
 # day 4
 
 ## mapdemo
+
+
+## task 4.3 fakerandom
+
+```sh
+
+rmmod fakerandom
+insmod ./.build/fakerandom.ko
+
+
+```
+
+
+```sh 
+
+sudo rm -rf  /dev/fakerandom*
+
+# mknod /dev/fakerandom0 c 239 0
+mknod /dev/fakerandom1 c 239 1
+mknod /dev/fakerandom2 c 239 2
+```
+```sh
+sudo chmod 666 /dev/fakerandom*
+sudo chmod 666 /dev/fakerandom2
+
+echo test  > /dev/fakerandom2
+
+# echo test hello sdgfseg wsts gs test hello sdgfseg wsts gstest hello sdgfseg wsts gstest hello sdgfseg wsts gstest hello sdgfseg wsts gstest hello sdgfseg wsts gstest hello sdgfseg wsts gs > /dev/fakerandom2
+
+echo test hello > /dev/fakerandom2
+
+# cat /dev/fakerandom0
+cat /dev/fakerandom1
+```
+
