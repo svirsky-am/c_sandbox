@@ -39,7 +39,7 @@ void vm_close(struct vm_area_struct *vma)
 vm_fault_t vm_fault(struct vm_fault *vmf){
     struct page *page;
     
-    struct vm_area_strcut *vma = vmf->vma;
+    struct vm_area_struct *vma = vmf->vma;
 
     struct mmap_info *info = (struct mmap_info*) vma->vm_private_data;
     if(!info->msg) return 0;
