@@ -110,7 +110,7 @@ int eat_func(void *arg)
 
 // struct hungry_chines
 
-static struct hungry_chinese{
+struct hungry_chinese{
   // about kthread: https://embetronicx.com/tutorials/linux/device-drivers/linux-device-drivers-tutorial-kernel-thread/
   // https://metanit.com/c/tutorial/6.3.php
     int id; 
@@ -125,85 +125,99 @@ static struct hungry_chinese{
 
 int init_module(void)
 {
-    // hungry_chinese
+    hungry_chinese t_chinese_1, t_chinese_2, t_chinese_3, t_chinese_4, t_chinese_5; 
     
-    char t_chinese_1_name[] = "t_chinese_1";
-    char t_chinese_2_name[] = "t_chinese_2";
-    char t_chinese_3_name[] = "t_chinese_3";
-    char t_chinese_4_name[] = "t_chinese_4";
-    char t_chinese_5_name[] = "t_chinese_5";
+    t_chinese_1->id = 1;
+    t_chinese_1->name = "t_chinese_1";
 
 
-    mutex_init(&mtx12);
-    mutex_init(&mtx23);
-    mutex_init(&mtx34);
-    mutex_init(&mtx45);
-    mutex_init(&mtx51);
+    // for(i = worker_id; i < size; i++) 
+    // {
+    //     printf(" %d - ", p_meta_of_array->numbers[i]);
+    //     pthread_mutex_lock( &condition_mutex );
+    //     p_meta_of_array->acc_sum += p_meta_of_array->numbers[i];
+    //     pthread_mutex_unlock( &condition_mutex );
+    // };
 
 
-    t_chinese_1 = kthread_create(eat_func, (void*)1, t_chinese_1_name);
-    if(!t_chinese_1)
-    {
-        mutex_destroy(&mtx12);
-        mutex_destroy(&mtx51);
-        printk(KERN_ALERT "t_chinese_1 cannot start eat\n");
-        return -ENOSYS;
-    }
+
+//     char t_chinese_1_name[] = "t_chinese_1";
+//     char t_chinese_2_name[] = "t_chinese_2";
+//     char t_chinese_3_name[] = "t_chinese_3";
+//     char t_chinese_4_name[] = "t_chinese_4";
+//     char t_chinese_5_name[] = "t_chinese_5";
 
 
-//just crate t_chinese_ action
-    t_chinese_2 = kthread_create(eat_func, (void*)2, t_chinese_2_name);
-    if(!t_chinese_2)
-    {
-        mutex_destroy(&mtx23);
-        mutex_destroy(&mtx12);
-        printk(KERN_ALERT "t_chinese_2 cannot starteat\n");
-        return -ENOSYS;
-    }
-
-    t_chinese_3 = kthread_create(eat_func, (void*)3, t_chinese_3_name);
-    if(!t_chinese_3)
-    {
-        mutex_destroy(&mtx23);
-        mutex_destroy(&mtx34);
-        printk(KERN_ALERT "t_chinese_3 cannot starteat\n");
-        return -ENOSYS;
-    }
-
-    t_chinese_4 = kthread_create(eat_func, (void*)4, t_chinese_4_name);
-    if(!t_chinese_4)
-    {
-        mutex_destroy(&mtx45);
-        mutex_destroy(&mtx34);
-        printk(KERN_ALERT "t_chinese_4 cannot starteat\n");
-        return -ENOSYS;
-    }
-
-    t_chinese_5 = kthread_create(eat_func, (void*)5, t_chinese_5_name);
-    if(!t_chinese_5)
-    {
-        mutex_destroy(&mtx51);
-        mutex_destroy(&mtx45);
-        printk(KERN_ALERT "t_chinese_5 cannot starteat\n");
-        return -ENOSYS;
-    }
+//     mutex_init(&mtx12);
+//     mutex_init(&mtx23);
+//     mutex_init(&mtx34);
+//     mutex_init(&mtx45);
+//     mutex_init(&mtx51);
 
 
-//run thread
-    get_task_struct(t_chinese_1);
-    wake_up_process(t_chinese_1);
+//     t_chinese_1 = kthread_create(eat_func, (void*)1, t_chinese_1_name);
+//     if(!t_chinese_1)
+//     {
+//         mutex_destroy(&mtx12);
+//         mutex_destroy(&mtx51);
+//         printk(KERN_ALERT "t_chinese_1 cannot start eat\n");
+//         return -ENOSYS;
+//     }
+
+
+// //just crate t_chinese_ action
+//     t_chinese_2 = kthread_create(eat_func, (void*)2, t_chinese_2_name);
+//     if(!t_chinese_2)
+//     {
+//         mutex_destroy(&mtx23);
+//         mutex_destroy(&mtx12);
+//         printk(KERN_ALERT "t_chinese_2 cannot starteat\n");
+//         return -ENOSYS;
+//     }
+
+//     t_chinese_3 = kthread_create(eat_func, (void*)3, t_chinese_3_name);
+//     if(!t_chinese_3)
+//     {
+//         mutex_destroy(&mtx23);
+//         mutex_destroy(&mtx34);
+//         printk(KERN_ALERT "t_chinese_3 cannot starteat\n");
+//         return -ENOSYS;
+//     }
+
+//     t_chinese_4 = kthread_create(eat_func, (void*)4, t_chinese_4_name);
+//     if(!t_chinese_4)
+//     {
+//         mutex_destroy(&mtx45);
+//         mutex_destroy(&mtx34);
+//         printk(KERN_ALERT "t_chinese_4 cannot starteat\n");
+//         return -ENOSYS;
+//     }
+
+//     t_chinese_5 = kthread_create(eat_func, (void*)5, t_chinese_5_name);
+//     if(!t_chinese_5)
+//     {
+//         mutex_destroy(&mtx51);
+//         mutex_destroy(&mtx45);
+//         printk(KERN_ALERT "t_chinese_5 cannot starteat\n");
+//         return -ENOSYS;
+//     }
+
+
+// //run thread
+//     get_task_struct(t_chinese_1);
+//     wake_up_process(t_chinese_1);
     
-    get_task_struct(t_chinese_2);
-    wake_up_process(t_chinese_2);
+//     get_task_struct(t_chinese_2);
+//     wake_up_process(t_chinese_2);
 
-    get_task_struct(t_chinese_3);
-    wake_up_process(t_chinese_3);
+//     get_task_struct(t_chinese_3);
+//     wake_up_process(t_chinese_3);
 
-    get_task_struct(t_chinese_4);
-    wake_up_process(t_chinese_4);
+//     get_task_struct(t_chinese_4);
+//     wake_up_process(t_chinese_4);
 
-    get_task_struct(t_chinese_5);
-    wake_up_process(t_chinese_5);
+//     get_task_struct(t_chinese_5);
+//     wake_up_process(t_chinese_5);
 
 
     printk(KERN_ALERT "threads started\n");
@@ -213,20 +227,20 @@ int init_module(void)
 
 void cleanup_module(void)
 {  
-    kthread_stop(t_chinese_1);
-    put_task_struct(t_chinese_1);
+    // kthread_stop(t_chinese_1);
+    // put_task_struct(t_chinese_1);
 
-    kthread_stop(t_chinese_2);
-    put_task_struct(t_chinese_2);
+    // kthread_stop(t_chinese_2);
+    // put_task_struct(t_chinese_2);
 
-    kthread_stop(t_chinese_3);
-    put_task_struct(t_chinese_3);
+    // kthread_stop(t_chinese_3);
+    // put_task_struct(t_chinese_3);
 
-    kthread_stop(t_chinese_4);
-    put_task_struct(t_chinese_4);
+    // kthread_stop(t_chinese_4);
+    // put_task_struct(t_chinese_4);
 
-    kthread_stop(t_chinese_5);
-    put_task_struct(t_chinese_5);
+    // kthread_stop(t_chinese_5);
+    // put_task_struct(t_chinese_5);
 
     printk(KERN_ALERT "threaddemo exited\n");
     // return 0;
