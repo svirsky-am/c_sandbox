@@ -217,8 +217,8 @@ insmod ./.build/fakerandom.ko
 sudo rm -rf  /dev/fakerandom*
 
 # mknod /dev/fakerandom0 c 239 0
-mknod /dev/fakerandom1 c 239 1
-mknod /dev/fakerandom2 c 239 2
+mknod /dev/fakerandom1 c 240 1
+mknod /dev/fakerandom2 c 240 2
 ```
 ```sh
 sudo chmod 666 /dev/fakerandom*
@@ -234,3 +234,18 @@ echo test hello > /dev/fakerandom2
 cat /dev/fakerandom1
 ```
 
+# Day5
+
+## cblk 
+```sh
+lsblk -f
+ mkfs -t ext4 /dev/sblkdev1
+ mount -o defaults /dev/sblkdev1  /mnt/block
+ lsblk -f # check mount
+#  cd /mnt/block
+ 
+ mkdir /mnt/block/test
+ echo "hello txt" > /mnt/block/test/hello.txt
+
+ lsblk -f # check utilysation
+```
