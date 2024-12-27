@@ -1,6 +1,16 @@
 #include "fakerandom.h"
 
 
+/*------------------ global variables start----------------*/
+
+static int in_array_len = 5;
+static int summator_dev_count = 0;
+static int min_of_range = 1;
+static int max_of_range = 10;
+static struct file_operations fops;
+static int summator_dev_major;
+
+
 ssize_t fakerandom_write(struct file *file, const char *buffer, size_t length, loff_t *offset)
 {
     int ofs = *offset;
