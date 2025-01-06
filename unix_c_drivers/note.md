@@ -11,33 +11,14 @@ sudo apt install bison
 
  
 ```
-```sh
-cd /usr/src
- sudo tar -xvf ./linux-source-6.8.0.tar.bz2 
+
 ```
-```
-cd /usr/src/linux-source-6.8.0
+
 ```
 
 
-Output by kernel 
-```cpp
-printk()
-```
-watch
-```sh
-journalxtl
-#or
-tail -f /var/log/kern.log
-```
 
 load module
-```
-sudo insmod ./hello.ko
-```
-```
-sudo rmmod ./hello.ko
-```
 
 ## paramdemo 
 modinfo ./paramdemo.ko
