@@ -1,0 +1,25 @@
+[package]                               # <- секция информации и проекте
+name = "yandex_course"                  # <- имя проекта (обязательное поле)
+version = "0.1.0"                       # <- текущая версия проекта
+edition = "2021"                        # <- версия языка, используемая компилятором
+description = "Короткое описание"       # <- описание проекта
+authors = ["Имя <author@yandex.ru>"]    # <- информация об авторах проекта
+license = "MIT OR Apache-2.0"           # <- тип лицензии
+homepage = "https://yandex.ru"          # <- домашняя страница проекта
+repository = "https://github.com/xxx"   # <- репозиторий проекта
+keywords = ["cli"]                      # <- список ключевых слов, описывающих проект
+categories = ["command-line-utilities"] # <- список категорий проекта     
+
+[dependencies]                          # <- секция основных зависимостей
+serde = "1.0"                           # <- зависимость с указанием версии (SemVer)
+time = "0.3.44"
+#my-local-crate = { path = "./local" }   # <- пример локальной зависимости
+
+[dev-dependencies]                      # <- секция зависимостей тестов/бенчмарков
+#tempdir = "3.0" 
+
+[build-dependencies]                    # <- секция зависимостей скриптов сборки
+cc = "1.0"                              
+
+[profile.release]                       # <- секция профиля сборки
+opt-level = 'z' 
