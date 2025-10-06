@@ -2,6 +2,8 @@
 
 set -ex;
 
+CUR_DIR=$(realpath $0)
+
 pushd ./rust/yandex_course/i_0_examples/ ;
     cargo fmt;
     cargo clippy ;

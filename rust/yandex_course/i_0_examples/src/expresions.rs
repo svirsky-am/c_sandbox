@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 fn heart_rate_status(bpm: u8) -> char {
     // Пример присваивания значения
     let result = if bpm < 50 {
@@ -118,8 +121,5 @@ pub fn fake_main() {
         (x, 0) => println!("На оси X: x = {}", x),
         (0, y) => println!("На оси Y: y = {}", y),
         (x, y) => println!("Точка: ({}, {})", x, y),
-    } 
-
-
-
+    }
 }
