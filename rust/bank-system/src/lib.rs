@@ -12,19 +12,20 @@ use std::collections::HashMap;
 type Name = String;
 type Balance = i64;
 
-struct Storage {
+pub struct Storage {
    accounts: HashMap<Name, Balance>,
 } 
 
 
 impl Storage {
     /// Создаёт новый пустой банк
-    fn new() -> Self {
+    pub fn new() -> Self {
         Storage {
             accounts: HashMap::new(),
         }
     }
-     pub fn add_user(&mut self, name: Name) -> Option<Balance> {
+    
+    pub fn add_user(&mut self, name: Name) -> Option<Balance> {
         if self.accounts.contains_key(&name) {
             None
         } else {
