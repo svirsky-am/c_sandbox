@@ -122,6 +122,91 @@ fn only_positive(x: i32) {
 }
 // Программа завершит выполнение и напечатает в консоль причину
 
+#[derive(Debug)]
+enum AuthError {
+    InvalidPassword,
+    UserNotFound(String),
+    TokenExpired,
+}
+
+use std::error::Error;
+
+impl Error for AuthError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        match self {
+            AuthError::UserNotFound(err) => None,
+            AuthError::InvalidPassword => None,
+            AuthError::TokenExpired => None,
+        }
+    }
+}
+
+use std::fmt;
+
+impl fmt::Display for AuthError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            AuthError::UserNotFound(username) => {
+                // write!(f, "Пользователь 'john' не найден: {}", err)
+                write!(f, "Пользователь '{}' не найден", username)
+            }
+            AuthError::InvalidPassword => {
+                write!(f, "Неверный пароль")
+            }
+            AuthError::TokenExpired => {
+                write!(f, "Токен истёк")
+            }
+        }
+    }
+}
+
+// Box<dyn Error>
+// Динамическая диспетчерезация ошибок
+
+fn read_and_parse_file(path: &str) -> Result<i32, Box<dyn Error>> {
+    let content = std::fs::read_to_string(path)?; // std::io::Error
+    let number = content.trim().parse::<i32>()?; // ParseIntError
+    Ok(number)
+}
+
+// Трейты From и Into для преобразования ошибок
+
+// Объявляем перечисление с возможными ошибками
+#[derive(Debug)]
+enum MyError {
+    NotFound,
+    Parse(ParseIntError),
+}
+
+// Реализуем трейт Display для красивого отображения
+impl fmt::Display for MyError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            MyError::NotFound => write!(f, "Элемент не найден"),
+            MyError::Parse(e) => write!(f, "Ошибка парсинга числа: {}", e),
+        }
+    }
+}
+
+// Реализуем трейт Error
+// В большинстве простых случаев методы трейта реализовывать не обязательно
+impl Error for MyError {}
+
+use std::num::ParseIntError;
+// Реализуем трейт From
+impl From<ParseIntError> for MyError {
+    fn from(err: ParseIntError) -> Self {
+        MyError::Parse(err)
+    }
+}
+
+// Используем наш enum с ошибкой и автоматическим преобразованием ошибки
+fn read_number_from_vec(data: Vec<&str>, index: usize) -> Result<i32, MyError> {
+    let s = data.get(index).ok_or(MyError::NotFound)?; // тут может вернуться ошибка
+    let number = s.parse::<i32>()?; // тут ошибка преобразуется автоматически через From
+    Ok(number)
+}
+
 pub fn fake_main() {
     let port: i32 = std::env::var("PORT")
         .ok()
@@ -150,4 +235,39 @@ pub fn fake_main() {
 
     // println!("Конфиг загружен: {}", config);
     // // Если нет файла настроек, то .expect() вызовет panic
+
+    // Практическое задание 2: создание собственной ошибки
+    let err = AuthError::UserNotFound("john".to_string());
+    assert_eq!(err.to_string(), "Пользователь 'john' не найден");
+
+    let err = AuthError::InvalidPassword;
+    assert_eq!(err.to_string(), "Неверный пароль");
+
+    let err = AuthError::TokenExpired;
+    assert_eq!(err.to_string(), "Токен истёк");
+
+    println!("Тесты прошли");
+
+    // Трейты From и Into для преобразования ошибок
+
+    let data = vec!["10", "20", "oops", "40"];
+
+    match read_number_from_vec(data.clone(), 1) {
+        Ok(n) => println!("Нашли число: {}", n),
+        Err(e) => println!("Ошибка: {}", e),
+    }
+
+    match read_number_from_vec(data.clone(), 2) {
+        Ok(n) => println!("Нашли число: {}", n),
+        Err(e) => println!("Ошибка: {}", e),
+    }
+
+    match read_number_from_vec(data.clone(), 10) {
+        Ok(n) => println!("Нашли число: {}", n),
+        Err(e) => println!("Ошибка: {}", e),
+    }
+    // Вывод в консоль
+    // Нашли число: 20
+    // Ошибка: Ошибка парсинга числа: invalid digit found in string
+    // Ошибка: Элемент не найден
 }
