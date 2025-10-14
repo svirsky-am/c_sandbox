@@ -11,6 +11,7 @@ mod expresions;
 mod fn_errors;
 mod functions;
 mod generics;
+mod refs;
 mod result_option;
 
 use data_types::example_data_types;
@@ -35,4 +36,5 @@ fn main() {
     closure_fn_threts::fake_main();
     result_option::fake_main();
     fn_errors::fake_main();
+    refs::fake_main();
 }
