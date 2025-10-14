@@ -10,5 +10,6 @@ pushd ./rust/yandex_course/i_0_examples/ ;
     # cargo clippy --fix --bin "yandex_course";
     cargo build ;
     cargo check ;
+    # RUST_BACKTRACE=full cargo run ;
     cargo run ;
 popd;

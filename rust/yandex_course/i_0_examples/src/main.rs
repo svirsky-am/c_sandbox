@@ -5,14 +5,17 @@ mod borrowing;
 mod cicles;
 mod closure;
 mod closure_fn_threts;
+mod collections;
 mod data_types;
 mod display_debug;
 mod expresions;
 mod fn_errors;
 mod functions;
 mod generics;
+mod iterators;
 mod refs;
 mod result_option;
+mod strings;
 
 use data_types::example_data_types;
 // use expresions::fake_main;
@@ -37,4 +40,7 @@ fn main() {
     result_option::fake_main();
     fn_errors::fake_main();
     refs::fake_main();
+    collections::fake_main();
+    strings::fake_main();
+    iterators::fake_main();
 }
