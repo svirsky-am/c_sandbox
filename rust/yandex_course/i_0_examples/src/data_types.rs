@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 // Структура с именованными полями
 struct Person {
     age: u8,

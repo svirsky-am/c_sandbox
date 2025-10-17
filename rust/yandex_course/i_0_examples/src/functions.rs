@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 // Пример функции, не принимающей параметры
 pub fn greet() {
     println!("Hello, world!");
