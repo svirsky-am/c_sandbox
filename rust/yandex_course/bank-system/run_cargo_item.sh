@@ -17,5 +17,5 @@ pushd $CUR_DIR ;
     cargo run --example cli -- balance Alice  ;
     cargo run --example cli -- balance Alice  ;
     cargo test  ;
-    cargo run --bin utils
+    # cargo run --bin utils
 popd;

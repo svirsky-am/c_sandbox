@@ -1,6 +1,6 @@
 use std::fs::File;
 // use std::io::Write;
-use std::io::{self, BufRead, BufWriter, Write};
+use std::io::{self, BufRead, BufWriter, Cursor, Read, Write};
 // use std::io::{;
 
 fn input_example() {
@@ -38,6 +38,23 @@ pub fn fake_main() {
 
     writeln!(writer, "John,100").unwrap(); // пока в буфере
     writeln!(writer, "Alice,200").unwrap(); // пока в буфере
-    writer.flush().unwrap(); // всё записано в файл одной операцией 
-    input_example();
+    writer.flush().unwrap(); // всё записано в файл однойCursor операцией 
+    // input_example();
+
+    // Использование Cursor для работы с памятью
+    // Создаём буфер в памяти
+    let mut buffer = Cursor::new(Vec::new());
+
+    // Записываем данные
+    write!(buffer, "Hello, world!").unwrap();
+
+    // Возвращаем курсор в начало, чтобы читать
+    buffer.set_position(0);
+
+    // Читаем данные обратно
+    let mut output = String::new();
+    // buffer.read_to_string(&mut output).unwrap();
+    buffer.read_to_string(&mut output).unwrap();
+
+    println!("Считано из памяти: {}", output);
 }

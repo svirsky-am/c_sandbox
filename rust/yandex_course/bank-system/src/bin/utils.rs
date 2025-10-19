@@ -94,9 +94,15 @@ fn main() {
                     continue;
                 }
                 let name = args[1].to_string();
-                let cur_balance = storage.get_balance(&name).unwrap();
-                println!("Текущий баланс для пользователя {}: {}", name, cur_balance);
-
+                // let cur_balance = storage.get_balance(&name).unwrap();
+                // println!("Текущий баланс для пользователя {}: {}", name, cur_balance);
+                let cur_balance = storage.get_balance(&name);
+                match cur_balance {
+                    Some(cur_balance) => {
+                        println!("Текущий баланс для пользователя {}: {}", name, cur_balance)
+                    }
+                    None => println!("Пользователь {} не найден", name),
+                }
             }
             "withdraw" => {
                 if args.len() != 3 {
