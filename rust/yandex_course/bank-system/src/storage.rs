@@ -168,3 +168,58 @@ fn test_nonexistent_user() {
     // Баланс у несуществующего пользователя
     assert_eq!(storage.get_balance(&"Dana".to_string()), None);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs::{self, File};
+    use std::io::Write;
+
+    #[test]
+    fn test_load_data_existing_file() {
+        let file_path = "test_load.csv";
+
+        // Создаём файл с исходными данными
+        let mut f = File::create(file_path).unwrap();
+        writeln!(f, "John,100").unwrap();
+        writeln!(f, "Alice,200").unwrap();
+        writeln!(f, "Bob,50").unwrap();
+
+        // Загружаем Storage
+        let storage = Storage::load_data(file_path);
+
+        assert_eq!(storage.get_balance(&"John".to_string()), Some(100));
+        assert_eq!(storage.get_balance(&"Alice".to_string()), Some(200));
+        assert_eq!(storage.get_balance(&"Bob".to_string()), Some(50));
+        // Пользователь Vasya не добавлен в файле, поэтому None
+        assert_eq!(storage.get_balance(&"Vasya".to_string()), None);
+
+        // Удаляем тестовый файл
+        fs::remove_file(file_path).unwrap();
+    }
+
+    #[test]
+    fn test_save_creates_file_with_correct_data() {
+        let file_path = "test_save.csv";
+
+        // Создаём Storage и добавляем пользователей
+        let mut storage = Storage::new();
+        storage.add_user("John".to_string());
+        storage.add_user("Alice".to_string());
+        storage.deposit(&"John".to_string(), 150).unwrap();
+        storage.deposit(&"Alice".to_string(), 300).unwrap();
+
+        // Сохраняем в файл
+        storage.save(file_path);
+
+        // Читаем файл обратно и проверяем содержимое
+        let contents = fs::read_to_string(file_path).unwrap();
+        let mut lines: Vec<&str> = contents.lines().collect();
+        lines.sort(); // сортируем, так как get_all() может возвращать в любом порядке
+
+        assert_eq!(lines, vec!["Alice,300", "John,150"]);
+
+        // Удаляем тестовый файл
+        fs::remove_file(file_path).unwrap();
+    }
+}
