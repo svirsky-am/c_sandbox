@@ -10,5 +10,9 @@ pushd $CUR_DIR ;
     # cargo clippy --fix --bin "yandex_course";
     cargo build ;
     cargo check ;
-    cargo run ;
+    # cargo run ;
+    # cargo run --example cli  
+    cargo run --example cli -- balance Alice ;
+    cargo run --example cli -- add Alice 5000 ;
+    cargo run --example cli -- balance Alice  ;
 popd;

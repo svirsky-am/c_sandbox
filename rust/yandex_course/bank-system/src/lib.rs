@@ -1,5 +1,3 @@
 // use mod storage::Storage;
 mod storage;
-
-
-pub use storage::{Storage, Name};
+pub use storage::{Name, Storage};
