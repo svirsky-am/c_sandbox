@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 #[derive(Debug)]
 enum Command {
     Init,                                // вариант "как есть", без доп.данных
@@ -9,6 +11,54 @@ enum Command {
 struct S1 {
     key1: u64,
     key2: u32,
+}
+
+// наследоваться от Sized нужно, чтобы вернуть Self,
+// иначе говоря - "чтобы было что разместить на стеке"
+trait CurrencyConvertable: Sized {
+    fn convert(self, into: &str, currencies: &HashMap<String, f64>) -> Self;
+}
+#[derive(Clone)]
+struct Wallet {
+    account: u64,
+}
+impl Wallet {
+    // да, в Rust можно использовать тип до его объявления - лишь бы в файле был
+    fn apply(&mut self, op: Operation) {
+        match op {
+            Operation::Add(v) => self.account += v as u64,
+            Operation::Sub(v) => self.account -= v as u64,
+        }
+    }
+}
+#[derive(Clone, Debug)]
+enum Operation {
+    Add(u32),
+    Sub(u32),
+}
+impl Operation {
+    fn is_significant(&self) -> bool {
+        match self {
+            Self::Add(value) | Self::Sub(value) if *value >= 100 => true,
+            _ => false,
+        }
+    }
+}
+impl CurrencyConvertable for Wallet {
+    fn convert(mut self, into: &str, currencies: &HashMap<String, f64>) -> Self {
+        self.account = ((self.account as f64) * currencies.get(into).unwrap()) as u64;
+        self
+    }
+}
+impl CurrencyConvertable for Operation {
+    fn convert(mut self, into: &str, currencies: &HashMap<String, f64>) -> Self {
+        match &mut self {
+            Self::Add(value) | Self::Sub(value) => {
+                *value = ((*value as f64) * currencies.get(into).unwrap()) as u32;
+            }
+        }
+        self
+    }
 }
 
 enum Mode {
@@ -116,4 +166,29 @@ pub fn fake_main() {
         });
     }
     println!("\nall sources: {:?}", sources);
+
+    let ops = vec![
+        Operation::Add(200),
+        Operation::Sub(50),
+        Operation::Add(30),
+        Operation::Sub(100),
+    ];
+    let maps = HashMap::from([("eur".to_string(), 0.84f64), ("cny".into(), 7.12f64)]);
+    let mut wallet = Wallet { account: 0 };
+    for o in ops {
+        wallet.apply(o.clone());
+        println!(
+            // а ещё Rust умеет удалять пробелы от начала строки,
+            // если для удобства чтения нужно одну строку в коде изобразить несколькими
+            "After applying {:?}usd (or {:?}eur or {:?}cny) account \
+             is {}usd (or {}eur or {}cny), significant - {}",
+            o,
+            o.clone().convert("eur", &maps),
+            o.clone().convert("cny", &maps),
+            wallet.account,
+            wallet.clone().convert("eur", &maps).account,
+            wallet.clone().convert("cny", &maps).account,
+            o.is_significant()
+        );
+    }
 }

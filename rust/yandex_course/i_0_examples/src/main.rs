@@ -15,6 +15,7 @@ mod fn_errors;
 mod functions;
 mod generics;
 mod iterators;
+mod lifetimes;
 mod refs;
 mod result_option;
 mod strings;
@@ -47,4 +48,5 @@ fn main() {
     iterators::fake_main();
     files_op::fake_main();
     algebra::fake_main();
+    lifetimes::fake_main();
 }
