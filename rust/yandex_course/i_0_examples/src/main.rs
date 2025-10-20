@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
+mod algebra;
 mod borrowing;
 mod cicles;
 mod closure;
@@ -45,4 +46,5 @@ fn main() {
     strings::fake_main();
     iterators::fake_main();
     files_op::fake_main();
+    algebra::fake_main();
 }
