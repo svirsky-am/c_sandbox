@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::fs;
 use std::fs::File;
@@ -6,7 +7,76 @@ use std::io::{BufRead, BufReader, BufWriter, Cursor};
 use std::path::Path;
 
 pub type Name = String;
-type Balance = i64;
+// type Balance = (i64);
+
+#[derive(Debug)]
+enum OpKind {
+    // пополнить/потратить счёт
+    Deposit(u32),
+    Withdraw(u32),
+    // закрыть аккаунт - все средства выведены
+    CloseAccount,
+} // вот и всё, никаких посторонних операций и данных! 
+
+// #[derive(PartialEq, PartialOrd)]
+// #[derive(PartialEq)]
+#[derive(Copy, Clone)]
+struct Balance {
+    result: u64,
+    last_ops: Vec<OpKind>,
+}
+
+
+
+impl PartialOrd for Balance {
+    
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        // Delegate the comparison to the inner field's partial_cmp method
+        self.result.partial_cmp(&other.result)
+        // match self.x.partial_cmp(&other.x) {
+        //     Some(Ordering::Equal) => self.y.partial_cmp(&other.y),
+        //     ordering => ordering,
+        // }
+    }
+}
+
+impl PartialEq for Balance {
+    fn eq(&self, other: &Self) -> bool {
+        // Books are considered equal if their ISBNs match, regardless of title or author
+        self.result == other.result
+    }
+}
+
+// обернём баланс в новый тип, чтобы можно было реализовывать метод
+// (не для целого числа ведь метод добавлять, верно? :) )
+// и запретим балансу опускаться ниже нуля
+
+impl Balance {
+    // Можно пойти ещё дальше и в качестве аргумента принимать любой тип,
+    // который может итерироваться по OpKind, с помощью дженерика:
+    // fn process<'a>(&mut self, impl IntoIterator<Item=&'a OpKind>) -> Vec<&'a OpKind>
+    // Пробуйте, дерзайте!
+    fn process<'a>(&mut self, ops: &[&'a OpKind]) -> Vec<&'a OpKind> {
+        let mut remaining = ops.into_iter();
+        let mut bad_ops = Vec::new();
+        for op in &mut remaining {
+            match op {
+                OpKind::Deposit(value) => {
+                    self.result += *value as u64;
+                }
+                OpKind::Withdraw(value) if self.result > *value as u64 => {
+                    self.result -= *value as u64;
+                }
+                other @ _ => {
+                    bad_ops.push(*other);
+                    break;
+                }
+            }
+        }
+        bad_ops.extend(remaining);
+        bad_ops
+    }
+}
 
 pub struct Storage {
     accounts: HashMap<Name, Balance>,
@@ -21,11 +91,20 @@ impl Storage {
     }
 
     pub fn add_user(&mut self, name: Name) -> Option<Balance> {
+        let emptyBalance = Balance {
+            result: 0,
+            last_ops: vec![
+                OpKind::Deposit(5000),
+                OpKind::Withdraw(500),
+                OpKind::Withdraw(1000),
+                OpKind::Withdraw(700),
+            ],
+        };
         if self.accounts.contains_key(&name) {
             None
         } else {
-            self.accounts.insert(name, 0);
-            Some(0)
+            self.accounts.insert(name, *emptyBalance);
+            Some(emptyBalance)
         }
     }
 
@@ -275,5 +354,17 @@ mod tests {
         lines.sort(); // сортируем для сравнения
 
         assert_eq!(lines, vec!["Alice,300", "John,150"]);
+    }
+
+    #[test]
+    fn test_extend_balance() {
+        let ops = [
+            &OpKind::Deposit(32),
+            &OpKind::Withdraw(64),
+            &OpKind::CloseAccount,
+        ];
+        // let bad_ops = Balance(0).process(&ops);
+        // assert_eq!(bad_ops.len(), 2);
+        // println!("{:?}", bad_ops);
     }
 }
