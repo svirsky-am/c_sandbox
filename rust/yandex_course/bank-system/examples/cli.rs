@@ -30,7 +30,7 @@ fn main() {
                 return;
             }
             let name: Name = args[2].clone();
-            let amount: i64 = args[3].parse().expect("Сумма должна быть числом");
+            let amount: u64 = args[3].parse().expect("Сумма должна быть числом");
 
             // Пытаемся пополнить баланс
             match storage.deposit(&name, amount) {
@@ -48,7 +48,7 @@ fn main() {
                 return;
             }
             let name: Name = args[2].clone();
-            let amount: i64 = args[3].parse().expect("Сумма должна быть числом");
+            let amount: u64 = args[3].parse().expect("Сумма должна быть числом");
 
             // Пытаемся снять деньги
             match storage.withdraw(&name, amount) {

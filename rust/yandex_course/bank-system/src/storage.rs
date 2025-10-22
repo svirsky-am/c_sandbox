@@ -1,9 +1,13 @@
+use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::fmt::Display;
 use std::fs;
 use std::fs::File;
 use std::io;
 use std::io::{BufRead, BufReader, BufWriter, Cursor};
+use std::ops::AddAssign;
+use std::ops::SubAssign;
 use std::path::Path;
 
 pub type Name = String;
@@ -12,24 +16,45 @@ pub type Name = String;
 #[derive(Debug)]
 enum OpKind {
     // пополнить/потратить счёт
-    Deposit(u32),
-    Withdraw(u32),
+    Deposit(u64),
+    Withdraw(u64),
     // закрыть аккаунт - все средства выведены
     CloseAccount,
 } // вот и всё, никаких посторонних операций и данных! 
 
 // #[derive(PartialEq, PartialOrd)]
 // #[derive(PartialEq)]
-#[derive(Copy, Clone)]
-struct Balance {
-    result: u64,
+// #[derive(Copy, Clone)]
+// #[derive(Copy)]
+#[derive(Debug)]
+pub struct Balance {
+    pub result: u64,
     last_ops: Vec<OpKind>,
 }
 
+impl AddAssign for Balance {
+    fn add_assign(&mut self, other: Self) {
+        self.result += other.result;
+        // self.y += other.y;
+    }
+}
 
+impl SubAssign for Balance {
+    fn sub_assign(&mut self, other: Self) {
+        self.result -= other.result;
+    }
+}
+
+impl Display for Balance {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // todo!()
+        write!(f, "MyStruct value: {}", self.result)?;
+        // Return Ok(()) on success
+        Ok(())
+    }
+}
 
 impl PartialOrd for Balance {
-    
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         // Delegate the comparison to the inner field's partial_cmp method
         self.result.partial_cmp(&other.result)
@@ -90,8 +115,8 @@ impl Storage {
         }
     }
 
-    pub fn add_user(&mut self, name: Name) -> Option<Balance> {
-        let emptyBalance = Balance {
+    pub fn add_user(&mut self, name: Name) -> Option<u64> {
+        let empty_balance = Balance {
             result: 0,
             last_ops: vec![
                 OpKind::Deposit(5000),
@@ -100,35 +125,71 @@ impl Storage {
                 OpKind::Withdraw(700),
             ],
         };
-        if self.accounts.contains_key(&name) {
-            None
+        // if self.accounts.contains_key(&name) {
+        //     None
+        // } else {
+        //     self.accounts.insert(name, empty_balance)
+        //     // Some(emptyBalance)
+        // }
+        // let cur_name = Box::new(name);
+        let cur_name = RefCell::new(name);
+
+        if let std::collections::hash_map::Entry::Vacant(e) =
+            self.accounts.entry(cur_name.borrow().to_string())
+        {
+            e.insert(empty_balance);
+            // None
+            // let cur_name2 = cur_name.borrow().as_str();
+            // cur_name2
+            let cur_balance = self.accounts.get(&cur_name.borrow().to_string());
+            // cur_balance
+            Some(cur_balance.unwrap().result)
+            // Some(0)
         } else {
-            self.accounts.insert(name, *emptyBalance);
-            Some(emptyBalance)
+            None
         }
     }
 
-    pub fn remove_user(&mut self, name: &Name) -> Option<Balance> {
-        self.accounts.remove(name)
+    pub fn remove_user(&mut self, name: &Name) -> Option<u64> {
+        self.accounts.remove(name).map(|account| account.result)
     }
 
-    pub fn get_balance(&self, name: &Name) -> Option<Balance> {
-        self.accounts.get(name).copied()
+    pub fn get_balance(&self, name: &Name) -> Option<u64> {
+        let cur_balance = self.accounts.get(name);
+        // if (cur_balance){
+        //     Some(cur_balance.unwrap().result)
+        // } else  {
+
+        // }
+        match cur_balance {
+            Some(n) => return Some(cur_balance.unwrap().result),
+            None => return None,
+        }
+
+        // if Some(cur_balance) {
+        //     Some(cur_balance.unwrap().result)
+        // } else {
+        //     None
+        // }
     }
 
-    pub fn deposit(&mut self, name: &Name, amount: Balance) -> Result<(), String> {
+    pub fn deposit(&mut self, name: &Name, amount: u64) -> Result<(), String> {
         if let Some(balance) = self.accounts.get_mut(name) {
-            *balance += amount;
+            balance.result = balance.result + amount;
             Ok(())
         } else {
             Err("Пользователь не найден".into())
         }
     }
 
-    pub fn withdraw(&mut self, name: &Name, amount: Balance) -> Result<(), String> {
+    pub fn withdraw(&mut self, name: &Name, amount: u64) -> Result<(), String> {
         if let Some(balance) = self.accounts.get_mut(name) {
-            if *balance >= amount {
-                *balance -= amount;
+            // dbg!("{}", balance);
+
+            // Ok(())
+            if &balance.result >= &amount {
+                // balance.result = balance.result - amount;
+                balance.result -= amount;
                 Ok(())
             } else {
                 Err("Недостаточно средств".into())
@@ -153,21 +214,20 @@ impl Storage {
             let reader = io::BufReader::new(file);
 
             // Читаем файл построчно
-            for line in reader.lines() {
-                // Каждая строка — это Result<String>, поэтому делаем if let Ok
-                if let Ok(line) = line {
-                    // Разделяем строку по запятой: "Name,Balance"
-                    let parts: Vec<&str> = line.trim().split(',').collect();
-
-                    if parts.len() == 2 {
-                        let name = parts[0].to_string();
-                        // Пробуем преобразовать баланс из строки в число
-                        let balance: i64 = parts[1].parse().unwrap_or(0);
-
-                        // Добавляем пользователя и выставляем баланс
-                        storage.add_user(name.clone());
-                        let _ = storage.deposit(&name, balance);
-                    }
+            for line in reader.lines().flatten() {
+                // Разделяем строку по запятой: "Name,Balance"
+                let parts: Vec<&str> = line.trim().split(',').collect();
+                if parts.len() == 2 {
+                    let name = parts[0].to_string();
+                    // Пробуем преобразовать баланс из строки в число
+                    let balance: u64 = parts[1].parse().unwrap_or(0);
+                    // let new_balance = Balance {
+                    //     result: balance,
+                    //     last_ops: vec![OpKind::Deposit(balance)],
+                    // };
+                    // Добавляем пользователя и выставляем баланс
+                    storage.add_user(name.clone());
+                    let _ = storage.deposit(&name, balance);
                 }
             }
         } else {
@@ -180,9 +240,19 @@ impl Storage {
         storage
     }
 
-    fn get_all(&self) -> Vec<(Name, i64)> {
-        self.accounts.iter().map(|(n, b)| (n.clone(), *b)).collect()
+    fn get_all(&self) -> Vec<(Name, u64)> {
+        self.accounts
+            .iter()
+            .map(|(n, b)| (n.clone(), b.result))
+            .collect()
     }
+
+    // fn get_all(&self) -> Vec<(Name, u64)> {
+    //     self.accounts
+    //         .iter()
+    //         .map(|(n, b)| (n.clone(), *b.result))
+    //         .collect()
+    // }
 
     /// Сохраняет текущее состояние Storage в CSV-файл
     pub fn save(&self, file: &str) {
@@ -316,7 +386,7 @@ mod tests {
             let parts: Vec<&str> = line.trim().split(',').collect();
             if parts.len() == 2 {
                 let name = parts[0].to_string();
-                let balance: i64 = parts[1].parse().unwrap_or(0);
+                let balance: u64 = parts[1].parse().unwrap_or(0);
                 storage.add_user(name.clone());
                 storage.deposit(&name, balance).unwrap();
             }

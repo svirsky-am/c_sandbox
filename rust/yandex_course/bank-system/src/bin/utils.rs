@@ -39,7 +39,7 @@ fn main() {
                     continue;
                 }
                 let name: Name = args[1].to_string();
-                let balance: i64 = match args[2].parse() {
+                let balance: u64 = match args[2].parse() {
                     Ok(b) => b,
                     Err(_) => {
                         println!("Сумма должна быть числом");
@@ -73,7 +73,7 @@ fn main() {
                     continue;
                 }
                 let name = args[1].to_string();
-                let amount: i64 = match args[2].parse() {
+                let amount: u64 = match args[2].parse() {
                     Ok(a) => a,
                     Err(_) => {
                         println!("Сумма должна быть числом");
@@ -110,7 +110,7 @@ fn main() {
                     continue;
                 }
                 let name = args[1].to_string();
-                let amount: i64 = match args[2].parse() {
+                let amount: u64 = match args[2].parse() {
                     Ok(a) => a,
                     Err(_) => {
                         println!("Сумма должна быть числом");
