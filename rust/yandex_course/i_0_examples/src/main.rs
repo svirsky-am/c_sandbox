@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
+mod algebra;
 mod borrowing;
 mod cicles;
 mod closure;
@@ -9,10 +10,12 @@ mod collections;
 mod data_types;
 mod display_debug;
 mod expresions;
+mod files_op;
 mod fn_errors;
 mod functions;
 mod generics;
 mod iterators;
+mod lifetimes;
 mod refs;
 mod result_option;
 mod strings;
@@ -43,4 +46,7 @@ fn main() {
     collections::fake_main();
     strings::fake_main();
     iterators::fake_main();
+    files_op::fake_main();
+    algebra::fake_main();
+    lifetimes::fake_main();
 }
