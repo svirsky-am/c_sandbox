@@ -19,8 +19,10 @@ mod lifetimes;
 mod refs;
 mod result_option;
 mod strings;
+mod traites_and_generics;
 
 use data_types::example_data_types;
+
 // use expresions::fake_main;
 
 fn main() {
@@ -49,4 +51,5 @@ fn main() {
     files_op::fake_main();
     algebra::fake_main();
     lifetimes::fake_main();
+    traites_and_generics::fake_main();
 }
