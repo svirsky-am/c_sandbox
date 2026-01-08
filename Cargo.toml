@@ -1,0 +1,6 @@
+[workspace]
+members = ["rust/yandex_course/*",
+#    "rr-file-processor", 
+#    "sandbox_env", 
+]
+resolver = "2"
