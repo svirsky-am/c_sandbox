@@ -36,3 +36,4 @@ unix_c/**/*~
  !.gitignore
 
 target
+# Cargo.lock
