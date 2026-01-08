@@ -1,6 +1,5 @@
 use std::collections::HashSet;
 
-// Вспомогательный комбинатор итераторов
 enum EitherIt<It1,It2> {
     It1(It1),
     It2(It2),
@@ -18,7 +17,6 @@ where It1: Iterator<Item=T>,
     }
 }
 
-// Исправляет строки: заглавные после точек, термины (сравниваем регистро-независимо) - по шаблону
 fn fix(bytes_to_fix: &str, set_of_labels: &HashSet<String>, id: usize) -> String {
     fn to_lower_iter(word: &str) -> impl Iterator<Item=char> {
         // Rust старается учитывать, что заглавная и строчная
@@ -62,7 +60,7 @@ fn fix(bytes_to_fix: &str, set_of_labels: &HashSet<String>, id: usize) -> String
                     EitherIt::It1(label.chars().chain([' ']))
                 }
                 else {
-                    EitherIt::It2(first_char.chain(to_lower_iter(remaining.as_str()).chain(\[' '\])))
+                    EitherIt::It2(first_char.chain(to_lower_iter(remaining.as_str()).chain([' '])))
                 }
             }
             )
@@ -70,7 +68,6 @@ fn fix(bytes_to_fix: &str, set_of_labels: &HashSet<String>, id: usize) -> String
         .collect()
 }
 
-// Делит строку на более-менее равные части
 fn split_n_impl(bytes: &[u8], from_idx: usize, to_idx: usize, parts_count: usize) -> Vec<&str> {
     assert!(parts_count != 0);
     if parts_count == 1 {
@@ -106,11 +103,15 @@ fn run_parallel(string: String, set_of_labels: &HashSet<String>) -> String {
         |scope| {
             let threads_count = 4;
             let parts = split_n(&string, threads_count);
-            
+            let threads = parts.into_iter().enumerate()
+                              .map( |(id, part)|
+                                     scope.spawn(move || fix(part, set_of_labels, id)) )
+                              .collect::<Vec<_>>();
             let mut result = String::new();
-
-            // <место для кода с порождением потоков fix()>
-
+            for thread in threads {
+                let done_part = thread.join().unwrap();
+                result.extend(done_part.chars());
+            }
             result.truncate(result.len() - 1); // убираем завершающий пробел
             result
         })
@@ -153,10 +154,13 @@ fn main() {
                  "Azure", "IoT", "Edge,", "WebAssembly", "Kubernetes.",
                  "Cloudflare", "Pingora" ];
 
-    let result: String;
-
-    // <место для кода с порождением потока run_parallel()>
-
+    let result
+        = std::thread::spawn(
+            move || run_parallel(
+                        mix.to_string(),
+                        &dict.into_iter().map(String::from).collect()
+                        )
+            ).join().unwrap();
     println!("{}", result);
     assert_eq!(result, orig);
 } 
