@@ -18,3 +18,9 @@ i-2-1-threads-task-handle-text:
 .PHONY: i_2_2_task_atomic_and_mutex
 i_2_2_task_atomic_and_mutex:
 	cargo run -p i_2_2_task_atomic_and_mutex
+
+
+
+.PHONY: i_2_3_task_vault
+i_2_3_task_vault:
+	cargo run -p i_2_3_task_vault
