@@ -39,5 +39,10 @@ i_2_3_task_vault_client:
 i_2_3_task_vault_client_socket2:
 	cargo run -p i_2_3_task_vault_client_socket2
 
+.PHONY: i_2_3_task_vault_client_socket_reconnect
+i_2_3_task_vault_client_socket_reconnect:
+	cargo run -p i_2_3_task_vault_client_socket_reconnect
+
+
 
 	

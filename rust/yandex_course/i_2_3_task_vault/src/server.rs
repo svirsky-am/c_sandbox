@@ -3,6 +3,8 @@ use std::io::BufReader;
 use std::io::Write;
 use std::net::TcpStream;
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
+use rand::Rng;
 
 use crate::vault::{Item, Vault, VaultError};
 
@@ -53,6 +55,15 @@ pub fn handle_client(stream: TcpStream, vault: Arc<Mutex<Vault>>) {
                         } else {
                             "ERROR: usage PUT <id> <name> <size>\n".to_string()
                         }
+                    }
+
+                    Some("PING") => {
+                        let mut rng = rand::rng();
+
+                        // Случайная задержка от 1 до 5 секунд
+                        let delay_secs = rng.random_range(1..=5);
+                        std::thread::sleep(Duration::from_secs(delay_secs));
+                        "PONG\n".to_string()
                     }
 
                     Some("TAKE") => {
