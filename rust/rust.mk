@@ -44,5 +44,21 @@ i_2_3_task_vault_client_socket_reconnect:
 	cargo run -p i_2_3_task_vault_client_socket_reconnect
 
 
+.PHONY: i_2_4_udp_monitor
+i_2_4_udp_monitor:
+	cargo build -p room_monitoring 
+
+.PHONY: i_2_4_udp_monitor_run_monitor
+i_2_4_udp_monitor_run_monitor:
+	cargo run -p room_monitoring --bin monitor 
+
+.PHONY: i_2_4_udp_monitor_run_sensor_simulator
+i_2_4_udp_monitor_run_sensor_simulator:
+	cargo run -p room_monitoring --bin sensor_simulator 
+
+
+
+
+
 
 	
