@@ -30,6 +30,7 @@ impl MetricsSender {
 
     // Метод для запуска цикла постоянной отправки метрик
     pub fn start_broadcasting(
+        
         self,
         target_addr: String,
         interval_ms: u64,
@@ -39,6 +40,13 @@ impl MetricsSender {
             target_addr, interval_ms
         );
 
+        // Информация о включённых фичах
+        #[cfg(feature = "random")]
+        println!("✅ Фича 'random' активна - используется rand для генерации данных");
+        
+        #[cfg(not(feature = "random"))]
+        println!("ℹ️  Фича 'random' отключена - используется детерминистическая генерация");
+        
         loop {
             let metrics = RoomMetrics::random();
 
@@ -56,6 +64,12 @@ impl MetricsSender {
                             "закрыта"
                         },
                     );
+
+                    // Демонстрация фичи sqlite
+                    #[cfg(feature = "sqlite")]
+                    {
+                        println!("   💾 SQL: {}", metrics.to_sql());
+                    }
                 }
                 Err(e) => {
                     eprintln!("Ошибка отправки: {}", e);

@@ -50,6 +50,7 @@ impl RoomMetrics {
     }
 
     // Метод для имитации метрик
+    #[cfg(feature = "random")]
     pub fn random() -> Self {
         use rand::Rng;
         let mut rng = rand::thread_rng();
@@ -76,6 +77,41 @@ impl RoomMetrics {
         )
     }
 
+    // Альтернативная реализация без фичи random
+    #[cfg(not(feature = "random"))]
+    pub fn random() -> Self {
+        // Простая детерминистическая реализация
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+        
+        let mut hasher = DefaultHasher::new();
+        SystemTime::now().hash(&mut hasher);
+        let hash = hasher.finish();
+        
+        Self::new(
+            20.0 + ((hash % 1000) as f32 / 100.0), // 20.0-30.0
+            40.0 + ((hash % 1000) as f32 / 50.0),  // 40.0-60.0
+            1000.0 + ((hash % 400) as f32 - 200.0), // 800.0-1200.0
+            (hash % 10) == 0, // 10% chance
+            4.0 + ((hash % 1000) as f32 / 50.0), 
+                        4.0 + ((hash % 1000) as f32 / 50.0), 
+                        4.0 + ((hash % 1000) as f32 / 50.0), 
+                        4.0 + ((hash % 1000) as f32 / 50.0), 
+                        4.0 + ((hash % 1000) as f32 / 50.0), 
+                        (hash % 5) == 0,
+                        (hash % 2) == 0 
+
+        )
+    }
+
+    // Дополнительный метод, доступный только с фичей "sqlite"
+    #[cfg(feature = "sqlite")]
+    pub fn to_sql(&self) -> String {
+        format!(
+            "INSERT INTO metrics (timestamp, temperature, humidity, pressure, door_open) VALUES ({}, {:.1}, {:.1}, {:.1}, {})",
+            self.timestamp, self.temperature, self.humidity, self.pressure, self.door_open
+        )
+    }
     // Метод для форматированного отображения времени
     pub fn formatted_time(&self) -> String {
         format!("{}s", self.timestamp)
