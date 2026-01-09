@@ -58,16 +58,16 @@ i_2_4_udp_monitor_demo_features:
 
 .PHONY: i_2_4_udp_monitor_with_features
 i_2_4_udp_monitor_with_features:
-	cargo build -p room_monitoring --features 'sqlite random'
+	cargo build -p room_monitoring --features 'sqlite random logging'
    
 
 .PHONY: i_2_4_udp_monitor_run_monitor
 i_2_4_udp_monitor_run_monitor:
-	cargo run -p room_monitoring --bin monitor --features 'sqlite random'
+	cargo run -p room_monitoring --bin monitor --features 'sqlite random logging'
 
 .PHONY: i_2_4_udp_monitor_run_sensor_simulator
 i_2_4_udp_monitor_run_sensor_simulator:
-	cargo run -p room_monitoring --bin sensor_simulator --features 'sqlite random'
+	cargo run -p room_monitoring --bin sensor_simulator --features 'sqlite random logging'
 
 .PHONY: i_2_4_udp_monitor_run_sensor_simulator_without_features
 i_2_4_udp_monitor_run_sensor_simulator_without_features:
