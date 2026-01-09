@@ -48,6 +48,12 @@ i_2_3_task_vault_client_socket_reconnect:
 i_2_4_udp_monitor:
 	cargo build -p room_monitoring 
 
+.PHONY: i_2_4_udp_monitor_demo
+i_2_4_udp_monitor_demo:
+	cargo run -p room_monitoring  --example demo
+
+
+
 .PHONY: i_2_4_udp_monitor_run_monitor
 i_2_4_udp_monitor_run_monitor:
 	cargo run -p room_monitoring --bin monitor 

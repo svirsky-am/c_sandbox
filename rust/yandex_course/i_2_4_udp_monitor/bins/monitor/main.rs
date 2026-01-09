@@ -33,7 +33,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 };
 
                 println!(
-                    "[#{:03}] {} | Темп: {:.1}°C | Влажн: {:.1}% | Давл: {:.1}hPa | Дверь: {} | {}",
+                    "[#{:03}] {} | Темп: {:.1}°C | Влажн: {:.1}% | Давл: {:.1}hPa | Дверь: {} | Шум: {:.1} Дб | {}",
                     total_received,
                     metrics.formatted_time(),
                     metrics.temperature,
@@ -44,6 +44,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     } else {
                         "закрыта"
                     },
+                    metrics.noise_level,
                     alert_status
                 );
             }
