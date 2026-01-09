@@ -24,3 +24,9 @@ i_2_2_task_atomic_and_mutex:
 .PHONY: i_2_3_task_vault
 i_2_3_task_vault:
 	cargo run -p i_2_3_task_vault
+
+
+
+.PHONY: i_2_3_task_vault_test
+i_2_3_task_vault_test:
+	cargo test -p i_2_3_task_vault
