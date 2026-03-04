@@ -76,6 +76,9 @@ i_2_4_udp_monitor_run_sensor_simulator_without_features:
 
 
 
+.PHONY: i_3_examples
+i_3_examples:
+	cargo run --package i_3_examples
 
 
 	
