@@ -81,4 +81,8 @@ i_3_examples:
 	cargo run --package i_3_examples
 
 
+.PHONY: i_3_i_3_task_1_tokio_spawn
+i_3_i_3_task_1_tokio_spawn:
+	cargo run --package i_3_task_1_tokio_spawn
+
 	
