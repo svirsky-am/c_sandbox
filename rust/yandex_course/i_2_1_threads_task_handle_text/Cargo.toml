@@ -1,0 +1,6 @@
+[package]
+name = "i_2_1_threads_task_handle_text"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

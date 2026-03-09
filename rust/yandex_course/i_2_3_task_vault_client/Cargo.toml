@@ -1,0 +1,6 @@
+[package]
+name = "i_2_3_task_vault_client"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
