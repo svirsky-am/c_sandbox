@@ -94,3 +94,9 @@ i_3_task2_tokio_future:
 .PHONY: i_3_task2_tokio_http_client
 i_3_task2_tokio_http_client:
 	cargo run --package i_3_task2_tokio_http_client
+
+
+.PHONY: i_3_task3_actix_backend_practice
+i_3_task3_actix_backend_practice:
+	cargo run --package i_3_task3_actix_backend_practice
+
