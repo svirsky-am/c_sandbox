@@ -85,4 +85,12 @@ i_3_examples:
 i_3_i_3_task_1_tokio_spawn:
 	cargo run --package i_3_task_1_tokio_spawn
 
-	
+
+.PHONY: i_3_task2_tokio_future
+i_3_task2_tokio_future:
+	cargo run --package i_3_task2_tokio_future
+
+
+.PHONY: i_3_task2_tokio_http_client
+i_3_task2_tokio_http_client:
+	cargo run --package i_3_task2_tokio_http_client
