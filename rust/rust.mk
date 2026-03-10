@@ -100,3 +100,8 @@ i_3_task2_tokio_http_client:
 i_3_task3_actix_backend_practice:
 	cargo run --package i_3_task3_actix_backend_practice
 
+.PHONY: i_3_task6_actix_bank_api
+i_3_task6_actix_bank_api:
+	cargo run --package i_3_task6_actix_bank_api
+
+
