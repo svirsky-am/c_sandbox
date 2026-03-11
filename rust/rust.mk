@@ -105,3 +105,9 @@ i_3_task6_actix_bank_api:
 	cargo run --package i_3_task6_actix_bank_api
 
 
+.PHONY: i_3_task6_actix_bank_api_advaced
+i_3_task6_actix_bank_api_advaced:
+	cargo run --package i_3_task6_actix_bank_api_advaced
+
+
+
