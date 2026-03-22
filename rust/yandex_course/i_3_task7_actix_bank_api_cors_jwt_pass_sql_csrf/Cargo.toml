@@ -1,0 +1,6 @@
+[package]
+name = "i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

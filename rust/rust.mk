@@ -110,4 +110,12 @@ i_3_task6_actix_bank_api_advaced:
 	cargo run --package i_3_task6_actix_bank_api_advaced
 
 
+# .PHONY: i_3_task6_actix_bank_api_advaced
+# i_3_task6_actix_bank_api_advaced:
+# 	cargo run --package i_3_task6_actix_bank_api_advaced
 
+
+
+.PHONY: i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf
+i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf:
+	cargo run --package i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf
