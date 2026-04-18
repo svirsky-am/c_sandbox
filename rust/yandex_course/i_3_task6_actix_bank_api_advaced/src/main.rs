@@ -14,6 +14,31 @@ use infrastructure::logging::init_logging;
 use presentation::handlers;
 use presentation::middleware::{RequestIdMiddleware, TimingMiddleware};
 
+
+fn configure_cors() -> Cors {
+    let allowed_origins: Vec<String> = std::env::var("ALLOWED_ORIGINS")
+        .unwrap_or_else(|_| "http://localhost:8080".to_string())
+        .split(',')
+        .map(|s| s.trim().to_string())
+        .collect();
+    
+    let mut cors = Cors::default()
+        .allowed_methods(vec!["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+        .allowed_headers(vec![
+            actix_web::http::header::CONTENT_TYPE,
+            actix_web::http::header::AUTHORIZATION,
+        ])
+        .expose_headers(vec!["X-Total-Count"]) // пример полезного expose
+        .max_age(3600);
+    
+    // Добавляем каждый origin отдельно (Cors не поддерживает вектор напрямую)
+    for origin in allowed_origins {
+        cors = cors.allowed_origin(&origin);
+    }
+    
+    cors
+} 
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     init_logging();
@@ -26,7 +51,8 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::default())
             .wrap(RequestIdMiddleware)
             .wrap(TimingMiddleware)
-            .wrap(Cors::permissive())
+            // .wrap(Cors::permissive())
+            .wrap(configure_cors()) 
             .app_data(web::Data::new(service.clone()))
             .configure(handlers::configure)
     })

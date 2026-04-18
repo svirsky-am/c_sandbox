@@ -105,9 +105,13 @@ i_3_task6_actix_bank_api:
 	cargo run --package i_3_task6_actix_bank_api
 
 
+
+ALLOWED_ORIGINS = https://evil.com
+export ALLOWED_ORIGINS
+
 .PHONY: i_3_task6_actix_bank_api_advaced
 i_3_task6_actix_bank_api_advaced:
-	cargo run --package i_3_task6_actix_bank_api_advaced
+	 cargo run --package i_3_task6_actix_bank_api_advaced
 
 
 # .PHONY: i_3_task6_actix_bank_api_advaced
@@ -115,7 +119,7 @@ i_3_task6_actix_bank_api_advaced:
 # 	cargo run --package i_3_task6_actix_bank_api_advaced
 
 
-
+# see doc rust/yandex_course/i_3_task6_actix_bank_api_advaced/README.md
 .PHONY: i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf
 i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf:
-	cargo run --package i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf
+	 cargo run --package i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf
