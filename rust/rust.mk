@@ -133,3 +133,9 @@ i_3_task8_test_http_client:
 .PHONY: i_3_task9-bank-api-postgres
 i_3_task9-bank-api-postgres:
 	cargo run --package i_3_task9-bank-api-postgres
+
+
+
+.PHONY: i_3_task10_gui_egui
+i_3_task10_gui_egui:
+	cargo run --package i_3_task10_gui_egui
