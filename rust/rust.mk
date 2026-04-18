@@ -124,7 +124,12 @@ i_3_task6_actix_bank_api_advaced:
 i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf:
 	 cargo run --package i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf
 
-
+.PHONY: i_3_task8_test_http_client
 i_3_task8_test_http_client:
 	cargo run --package i_3_task8_test_http_client
 	cargo test --package i_3_task8_test_http_client
+
+
+.PHONY: i_3_task9-bank-api-postgres
+i_3_task9-bank-api-postgres:
+	cargo run --package i_3_task9-bank-api-postgres
