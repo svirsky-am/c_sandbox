@@ -1,6 +1,7 @@
 [workspace]
 members = [
-    "./rust/yandex_course/i_3_examples", "rust/yandex_course/i_3_task2_tokio_future", "rust/yandex_course/i_3_task2_tokio_http_client", "rust/yandex_course/i_3_task3_actix_backend_practice",  "rust/yandex_course/i_3_task6_actix_bank_api_advaced",  "rust/yandex_course/i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf", "rust/yandex_course/i_3_task_1_tokio_spawn",
+    "./rust/yandex_course/i_3_examples", "rust/yandex_course/i_3_task2_tokio_future", "rust/yandex_course/i_3_task2_tokio_http_client", "rust/yandex_course/i_3_task3_actix_backend_practice",  "rust/yandex_course/i_3_task6_actix_bank_api_advaced",  "rust/yandex_course/i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf", "rust/yandex_course/i_3_task8_test_http_client", "rust/yandex_course/i_3_task_1_tokio_spawn",
+     "rust/yandex_course/i_3_task8_test_http_client",
 #    "./rust/yandex_course/*",
     #    "rr-file-processor", 
     #    "sandbox_env", 
