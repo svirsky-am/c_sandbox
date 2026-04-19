@@ -76,6 +76,66 @@ i_2_4_udp_monitor_run_sensor_simulator_without_features:
 
 
 
+.PHONY: i_3_examples
+i_3_examples:
+	cargo run --package i_3_examples
 
 
-	
+.PHONY: i_3_i_3_task_1_tokio_spawn
+i_3_i_3_task_1_tokio_spawn:
+	cargo run --package i_3_task_1_tokio_spawn
+
+
+.PHONY: i_3_task2_tokio_future
+i_3_task2_tokio_future:
+	cargo run --package i_3_task2_tokio_future
+
+
+.PHONY: i_3_task2_tokio_http_client
+i_3_task2_tokio_http_client:
+	cargo run --package i_3_task2_tokio_http_client
+
+
+.PHONY: i_3_task3_actix_backend_practice
+i_3_task3_actix_backend_practice:
+	cargo run --package i_3_task3_actix_backend_practice
+
+.PHONY: i_3_task6_actix_bank_api
+i_3_task6_actix_bank_api:
+	cargo run --package i_3_task6_actix_bank_api
+
+
+
+ALLOWED_ORIGINS = https://evil.com
+export ALLOWED_ORIGINS
+
+.PHONY: i_3_task6_actix_bank_api_advaced
+i_3_task6_actix_bank_api_advaced:
+	 cargo run --package i_3_task6_actix_bank_api_advaced
+
+
+# .PHONY: i_3_task6_actix_bank_api_advaced
+# i_3_task6_actix_bank_api_advaced:
+# 	cargo run --package i_3_task6_actix_bank_api_advaced
+
+
+# see doc rust/yandex_course/i_3_task6_actix_bank_api_advaced/README.md
+.PHONY: i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf
+i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf:
+	 cargo run --package i_3_task7_actix_bank_api_cors_jwt_pass_sql_csrf
+
+.PHONY: i_3_task8_test_http_client
+i_3_task8_test_http_client:
+	cargo run --package i_3_task8_test_http_client
+	cargo test --package i_3_task8_test_http_client
+
+
+.PHONY: i_3_task9-bank-api-postgres
+i_3_task9-bank-api-postgres:
+	cargo run --package i_3_task9-bank-api-postgres
+
+
+
+.PHONY: i_3_task10_gui_egui
+i_3_task10_gui_egui:
+	cargo run --package i_3_task10_gui_egui
