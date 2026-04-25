@@ -39,7 +39,8 @@ pub async fn extract_user_from_token(
         .get_user(user_id)
         .await
         .map_err(|_| ErrorUnauthorized("user not found"))?;
-
+    dbg!(&user.id);
+    dbg!(&user.email);
     Ok(AuthenticatedUser {
         id: user.id,
         email: user.email,

@@ -29,13 +29,27 @@ curl -X POST http://localhost:8080/api/auth/login \
 ```
 Получаем JWT-токен и Создание счёта с JWT:
 ```sh
-eport TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzY2MwMTA4Yy0zYjI5LTRlMjMtYmM3NC1hMDY2NjNlY2VkOTAiLCJleHAiOjE3NzY1Mzg0ODksImlhdCI6MTc3NjUzNDg4OX0.-N5Yf97yycRbVMl1yslc5VGfx4h9R8ZDAVGxto8PdOM
+export TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3Zjk4OTI4Zi01M2I1LTRhODAtODY0NS1hMzlkNjIyZmM5MjQiLCJleHAiOjE3NzcxMjUzOTIsImlhdCI6MTc3NzEyMTc5Mn0.RR6vmHk6wcNMyIwkO3K3VvPZ7S3yAOA_fxUX-hTdFwc"
+
+
+TOKEN=$(curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com", "password": "secure123"}'\
+  | jq -r '.access_token')
+
 ```
 c# 4. Создание счёта с JWT
 ```sh
 curl -X POST http://localhost:8080/api/accounts \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
+  -d '{"id": 1, "initial": 1000}'
+
+
+```sh
+curl -X POST http://localhost:8080/api/accounts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3Zjk4OTI4Zi01M2I1LTRhODAtODY0NS1hMzlkNjIyZmM5MjQiLCJleHAiOjE3NzcxMjUzOTIsImlhdCI6MTc3NzEyMTc5Mn0.RR6vmHk6wcNMyIwkO3K3VvPZ7S3yAOA_fxUX-hTdFwc" \
   -d '{"id": 1, "initial": 1000}'
 # Ответ: {"id": 1}
 ```
