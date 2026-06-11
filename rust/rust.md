@@ -90,3 +90,17 @@ https://practicum.yandex.ru/learn/middle-rust-blockchain/courses/576cf632-753a-4
 В прошлом уроке вы собрали Rust-код в WebAssembly, п
 
 Но сборки web assembly не было
+
+## 
+
+
+Ссылка на урок: [Спринт 7/7: 7 «Blockchain разработка» → Тема 3/7: Solana. Ключевые концепции и знакомство с разработкой → Урок 1/10: Знакомство с Solana. Ключевые концепции]( https://practicum.yandex.ru/learn/middle-rust-blockchain/courses/9eeba14e-039f-4aa0-8d66-b821160d41f3/sprints/808984/topics/31f5bb92-44da-4710-b1dd-ecf0af3c871c/lessons/a3c45496-26a0-404c-8caf-fa69b440fe31/#ac013c97-0640-47fe-a547-6c0cc47d3e91 )
+Вопрос: 
+
+##  не работает Proof of History (PoH)
+
+нужно добавить 
+```rs
+    use sha2::{Sha256, Digest};
+       self.current_hash =  Sha256::digest(&data).into();
+```
