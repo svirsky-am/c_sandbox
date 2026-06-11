@@ -139,3 +139,8 @@ i_3_task9-bank-api-postgres:
 .PHONY: i_3_task10_gui_egui
 i_3_task10_gui_egui:
 	cargo run --package i_3_task10_gui_egui
+
+
+.PHONY: i_3_task_11_actix_jwt_demo
+i_3_task_11_actix_jwt_demo:
+	cargo run --package i_3_task_11_actix_jwt_demo

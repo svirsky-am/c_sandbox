@@ -48,14 +48,11 @@ async fn main() -> std::io::Result<()> {
             .wrap(cors)
             .app_data(web::Data::new(bank_service.clone()))
             .app_data(web::Data::new(auth_service.clone()))
+            .service(web::scope("/api").service(handlers::public::scope()))
             .service(
-                web::scope("/api")
-                    .service(handlers::public::scope())
-                    .service(
-                        web::scope("")
-                            .wrap(JwtAuthMiddleware::new(auth_service.keys().clone()))
-                            .service(handlers::protected::scope())
-                    )
+                web::scope("/apii")
+                        .wrap(JwtAuthMiddleware::new(auth_service.keys().clone()))
+                        .service(handlers::protected::scope())
             )
     })
     .bind((config.host.as_str(), config.port))?
