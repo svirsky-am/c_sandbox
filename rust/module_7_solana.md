@@ -56,10 +56,15 @@ solana config get
 
 
 ```
+Create test sol
+https://faucet.solana.com/
+Checkup
+https://solscan.io/
 
 
 # localnet
 ```sh
+solana-test-validator --reset 
 solana config set --url localhost
 solana airdrop 100
 spl-token create-token
