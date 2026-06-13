@@ -1,0 +1,332 @@
+/* Solana-стиль: тёмный фон, фирменные цвета */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+:root {
+  --bg: #0a0a0f;
+  --bg-card: #13131a;
+  --bg-card-hover: #1a1a24;
+  --border: #2a2a3a;
+  --border-light: #3a3a50;
+
+  /* Solana brand colors */
+  --sol-purple: #9945ff;
+  --sol-green: #14f195;
+  --sol-blue: #00c2ff;
+
+  --text: #e8e8f0;
+  --text-dim: #888899;
+  --text-muted: #555566;
+
+  --danger: #ff4455;
+  --warning: #ffaa00;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --transition: 0.15s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* === Лэйаут === */
+
+.app {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* === Шапка === */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.header h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--sol-green);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* === Карточки === */
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+}
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.mono {
+  font-family: "Fira Code", "Courier New", monospace;
+  font-size: 0.82rem;
+}
+
+.addr {
+  word-break: break-all;
+  color: var(--text-dim);
+}
+
+.small {
+  font-size: 0.75rem;
+}
+
+/* === Инфо-карточка === */
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* === Счётчик === */
+
+.counter-card {
+  text-align: center;
+  padding: 28px 20px;
+}
+
+.count-display {
+  font-size: 5.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin: 12px 0 16px;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--transition);
+}
+
+.count-display.active {
+  color: var(--sol-green);
+  text-shadow: 0 0 40px rgba(20, 241, 149, 0.25);
+}
+
+.count-display.inactive {
+  color: var(--text-muted);
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* === Кнопки === */
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.btn {
+  padding: 12px 8px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity var(--transition), transform var(--transition),
+    box-shadow var(--transition);
+  color: #fff;
+  outline: none;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btn-init {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, var(--sol-purple), #6a1ff0);
+  font-size: 1rem;
+  padding: 14px;
+}
+
+.btn-inc {
+  background: linear-gradient(135deg, var(--sol-green) 0%, #0fb878 100%);
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.btn-refresh {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-dim);
+}
+
+/* === Ошибка === */
+
+.error-card {
+  border-color: var(--danger);
+  background: rgba(255, 68, 85, 0.06);
+}
+
+.error-card .label {
+  color: var(--danger);
+}
+
+.error-card .mono {
+  color: var(--danger);
+  word-break: break-word;
+}
+
+/* === Лог транзакций === */
+
+.tx-log .tx-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tx-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+}
+
+.tx-action {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--sol-green);
+  min-width: 74px;
+}
+
+.tx-sig {
+  flex: 1;
+  color: var(--text-muted);
+}
+
+.tx-ts {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* === Пустое состояние === */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--text-dim);
+}
+
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 8px;
+}
+
+.empty-state h2 {
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+.empty-state p {
+  max-width: 300px;
+  font-size: 0.88rem;
+}
+
+/* === Футер === */
+
+.footer {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* === Wallet button override (адаптация к нашей теме) === */
+
+.wallet-adapter-button {
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.88rem !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 8px 16px !important;
+  height: auto !important;
+}
+
+/* === Адаптивность === */
+
+@media (max-width: 480px) {
+  .actions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .btn-init {
+    grid-column: 1 / -1;
+  }
+  .count-display {
+    font-size: 4rem;
+  }
+}

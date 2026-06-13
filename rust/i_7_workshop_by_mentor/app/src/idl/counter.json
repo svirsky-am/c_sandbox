@@ -1,0 +1,184 @@
+{
+  "address": "9Sq3k1ZXRNTFAMhjC8JrgUHn23dy13v2y56aV3tspMTt",
+  "metadata": {
+    "name": "counter",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Anchor Counter — Workshop #5 Solana"
+  },
+  "instructions": [
+    {
+      "name": "increment",
+      "docs": [
+        "Увеличивает счётчик на 1.",
+        "Может вызывать только владелец (authority) аккаунта."
+      ],
+      "discriminator": [
+        11,
+        18,
+        104,
+        9,
+        104,
+        174,
+        59,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "counter",
+          "docs": [
+            "Тот же PDA-аккаунт. Anchor проверяет, что seeds совпадают,",
+            "тем самым гарантируя что мы меняем правильный счётчик."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Должен совпадать с authority, записанным в counter.authority."
+          ],
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize",
+      "docs": [
+        "Создаёт аккаунт счётчика для вызывающего кошелька.",
+        "Адрес аккаунта — PDA, выведенный из публичного ключа authority.",
+        "Можно вызвать только один раз для каждого кошелька."
+      ],
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "counter",
+          "docs": [
+            "PDA-аккаунт счётчика.",
+            "seeds = [b\"counter\", authority] — адрес выводится из кошелька,",
+            "поэтому у каждого пользователя свой уникальный счётчик."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Кошелёк, который создаёт и платит за аккаунт."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "System Program нужна для создания нового аккаунта."
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Counter",
+      "discriminator": [
+        255,
+        176,
+        4,
+        245,
+        188,
+        253,
+        124,
+        25
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Overflow",
+      "msg": "Counter overflow: reached maximum value"
+    }
+  ],
+  "types": [
+    {
+      "name": "Counter",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "count",
+            "docs": [
+              "Текущее значение счётчика."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "authority",
+            "docs": [
+              "Публичный ключ владельца."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump seed для верификации PDA без дополнительных вычислений."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

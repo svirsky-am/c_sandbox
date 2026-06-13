@@ -37,3 +37,4 @@ unix_c/**/*~
 
 target
 Cargo.lock
+test-ledger

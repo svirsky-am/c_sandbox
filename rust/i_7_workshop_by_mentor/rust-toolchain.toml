@@ -1,0 +1,3 @@
+# Для Anchor 0.32+ нужен Rust 1.85+ (поддержка edition2024 в зависимостях)
+[toolchain]
+channel = "stable"

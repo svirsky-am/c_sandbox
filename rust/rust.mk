@@ -113,6 +113,16 @@ export ALLOWED_ORIGINS
 i_3_task6_actix_bank_api_advaced:
 	 cargo run --package i_3_task6_actix_bank_api_advaced
 
+.PHONY: i_7_3_7_1_poh
+i_7_3_7_1_poh:
+	cargo run -p i_7_3_7_1_poh
+
+
+.PHONY: i_7_workshop_run
+i_7_workshop_run:
+	cargo run -p i_7_workshop
+
+
 
 # .PHONY: i_3_task6_actix_bank_api_advaced
 # i_3_task6_actix_bank_api_advaced:
